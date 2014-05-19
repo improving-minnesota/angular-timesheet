@@ -22,9 +22,9 @@ module.exports = function (grunt) {
     'angular-resource/angular-resource.js',
     'angular-sanitize/angular-sanitize.js',
     'angular-animate/angular-animate.js',
+    'angular-route/angular-route.js',
 
     // Angular UI libraries
-    'angular-ui-router/release/angular-ui-router.js',
     'angular-ui-utils/components/angular-ui-docs/build/ui-utils.js',
     'angular-ui-select2/src/select2.js',
     'angular-ui-bootstrap/src/position/position.js',
