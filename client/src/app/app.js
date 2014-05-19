@@ -10,6 +10,6 @@ angular.module('app', [
       templateUrl: 'assets/templates/index.html',
       controller: 'AppCtrl'
     })
-    .otherwise('/home');
+    .otherwise({redirectTo: '/home'});
 });
   
