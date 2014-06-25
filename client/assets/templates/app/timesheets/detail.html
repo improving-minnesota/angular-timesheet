@@ -82,8 +82,7 @@
                 <th class="tsz-table-delete-column">Delete</th>
               </tr>
             </thead>
-            <tbody>
-              <tr ng-repeat="timeunit in timeunits | orderBy:'dateWorked'" ng-click="showTimeunitDetail(timeunit)" 
+            <tbody> 
               <!-- TODO : add a filter to order the timeunits by date worked -->
               <tr ng-repeat="timeunit in timeunits" ng-click="showTimeunitDetail(timeunit)" 
                 class="fadeable-row"
