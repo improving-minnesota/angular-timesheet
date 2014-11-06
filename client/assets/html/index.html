@@ -10,7 +10,11 @@
   </head>
   <body ng-controller="MainCtrl">
     <div ng-cloak="ng-cloak" class="tsz-page-container">
-        <!-- TODO: Add the application container sections -->
+        <div ng-cloak="ng-cloak" class="tsz-page-container">
+            <div ui-view="navbar"></div>
+            <div ui-view="content"></div>
+            <div ui-view="login"></div>
+        </div>
     </div>
     <!-- Shims-->
     <script src="assets/js/components/modernizr/modernizr.js"></script>
