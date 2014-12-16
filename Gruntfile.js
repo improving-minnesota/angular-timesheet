@@ -381,10 +381,7 @@ module.exports = function (grunt) {
       server: {
         options: {
           stdout: true,
-          stderror: true,
-          execOptions: {
-            maxBuffer: Infinity
-          }
+          stderror: true
         },
         command: 'node api/server.js'
       }

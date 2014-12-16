@@ -20,11 +20,11 @@ function ProjectsIndexPage() {
   };
 
   this.deleteFirstProject = function () {
-    this.firstProject.element(by.buttonText('Delete')).click();
+    this.firstProject.findElement(by.buttonText('Delete')).click();
   };
 
   this.restoreFirstProject = function () {
-    this.firstProject.element(by.buttonText('Restore')).click();
+    this.firstProject.findElement(by.buttonText('Restore')).click();
   };
 }
 
