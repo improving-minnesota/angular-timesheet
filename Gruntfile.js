@@ -381,7 +381,10 @@ module.exports = function (grunt) {
       server: {
         options: {
           stdout: true,
-          stderror: true
+          stderror: true,
+          execOptions: {
+            maxBuffer: Infinity
+          }
         },
         command: 'node api/server.js'
       }
@@ -505,6 +508,7 @@ module.exports = function (grunt) {
   // Test results stored in client/test-reports
   grunt.registerTask('test', ['production', 'runapp:test']);
 
+  grunt.registerTask('serve:protractor', ['env:development', 'shell:protractor']);
   grunt.registerTask('serve:development', ['env:development', 'shell:server']);
   grunt.registerTask('serve:debug', ['env:debug', 'shell:server']);
   grunt.registerTask('serve:production', ['env:production', 'shell:server']);
