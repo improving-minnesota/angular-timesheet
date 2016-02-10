@@ -1,17 +1,18 @@
 angular.module('app.controllers', [])
 
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function () {
 
   })
   
   .controller('AppCtrl', 
-    function ($scope){
-      $scope.demo = {};
+    function () {
+      var vm = this;
+      vm.demo = {};
     }
   )
 
   .controller('NavCtrl', 
-    function ($scope) {
+    function () {
 
     }
   );
