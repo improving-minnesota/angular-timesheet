@@ -5,7 +5,7 @@
 
         <div class="form-group">
           <div tsz-field-wrap input-id="timesheet-name" label="Name">
-            <input type="text" class="form-control" 
+            <input type="text" class="form-control"
               name="timesheet-name" placeholder="Timesheet Name"
               ng-model="timesheet.name">
           </div>
@@ -13,7 +13,7 @@
 
         <div class="form-group">
           <div tsz-field-wrap input-id="timesheet-description" label="Description">
-            <input type="text" class="form-control" 
+            <input type="text" class="form-control"
               name="timesheet-description" placeholder="Timesheet Description"
               ng-model="timesheet.description">
           </div>
@@ -22,12 +22,12 @@
         <div class="form-group">
           <div tsz-field-wrap input-id="timesheet-beginDate" label="Begin Date">
             <div class="input-group">
-              <input type="text" class="form-control" 
-                datepicker-popup="MM/dd/yyyy"
-                ng-model="timesheet.beginDate"  
+              <input type="text" class="form-control"
+                uib-datepicker-popup="MM/dd/yyyy"
+                ng-model="timesheet.beginDate"
                 show-weeks="false"
                 show-button-bar="false"
-                ng-required="true" 
+                ng-required="true"
                 close-text="Close" />
               <span class="input-group-btn">
                 <button class="btn btn-default">
@@ -41,13 +41,13 @@
         <div class="form-group">
           <div tsz-field-wrap input-id="timesheet-endDate" label="End Date">
             <div class="input-group">
-              <input type="text" class="form-control" 
-                datepicker-popup="MM/dd/yyyy"
-                ng-model="timesheet.endDate"  
+              <input type="text" class="form-control"
+                uib-datepicker-popup="MM/dd/yyyy"
+                ng-model="timesheet.endDate"
                 show-weeks="false"
                 show-button-bar="false"
                 min="timesheet.beginDate"
-                ng-required="true" 
+                ng-required="true"
                 close-text="Close" />
               <span class="input-group-btn">
                 <button class="btn btn-default">
@@ -64,7 +64,7 @@
 
         <div class="row">
           <div class="col-sm-2 col-sm-offset-8">
-            <button class="btn btn-primary btn-block" 
+            <button class="btn btn-primary btn-block"
               ng-click="save()">{{saveText}}</button>
           </div>
           <div class="col-sm-2">
