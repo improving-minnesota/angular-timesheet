@@ -1,12 +1,10 @@
 describe('Employees', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     employee,
     spies,
@@ -23,8 +21,7 @@ describe('Employees', function() {
         'app.employees.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_, _$state_, _$stateParams_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_, _$state_, _$stateParams_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
       $state = _$state_;
@@ -57,9 +54,7 @@ describe('Employees', function() {
     describe('EmployeeCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
         controller = $controller("EmployeeCtrl", { 
-          $scope: $scope,
           $state: spies.state,
           $stateParams: $stateParams
         });
@@ -70,7 +65,7 @@ describe('Employees', function() {
       describe('during setup', function () {
         it('should be able to instantiate the controller and request a page of employees', function () { 
           expect(controller).to.be.ok; 
-          // $scope.requestEmployees is called upon controller creation
+          // controller.requestEmployees is called upon controller creation
           $httpBackend.expect('GET', '/users');
           $httpBackend.flush();
         });
@@ -80,9 +75,9 @@ describe('Employees', function() {
 
         it('should set the result to the employees', function () {
           $httpBackend.expect('GET', '/users');
-          $scope.requestEmployees();
+          controller.requestEmployees();
           $httpBackend.flush();
-          expect($scope.employees[0].username).to.equal("testUser");
+          expect(controller.employees[0].username).to.equal("testUser");
         }); 
 
       });
@@ -91,7 +86,7 @@ describe('Employees', function() {
         
         it('should transition to the employee detail state', function () {
           $httpBackend.flush();
-          $scope.showDetail(employee);
+          controller.showDetail(employee);
           expect(spies.state.go).to.have.been.calledWith('app.employees.detail');
         });
       });
@@ -99,7 +94,7 @@ describe('Employees', function() {
       describe('creating a new employee', function () {
         it('should transition to the create employee state', function () {
           $httpBackend.flush();
-          $scope.createNew();
+          controller.createNew();
           expect(spies.state.go).to.have.been.calledWith('app.employees.create');
         });
       });
@@ -109,7 +104,7 @@ describe('Employees', function() {
         it('should send a remove request for the specified employee', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/' + employee._id).respond(200);
-          $scope.remove(employee);
+          controller.remove(employee);
           $httpBackend.flush();
         });
 
@@ -120,7 +115,7 @@ describe('Employees', function() {
           });
 
           it('should set the employee to deleted for the ui', function () {
-            $scope.remove(employee);
+            controller.remove(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.true;
           });
@@ -133,7 +128,7 @@ describe('Employees', function() {
           });
 
           it('should set deleted to false for the employee in the ui', function () {
-            $scope.remove(employee);
+            controller.remove(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.false;
           });
@@ -149,7 +144,7 @@ describe('Employees', function() {
         it('should send a restore request for the specified employee', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/' + employee._id).respond(200);
-          $scope.restore(employee);
+          controller.restore(employee);
           $httpBackend.flush();
         });
 
@@ -160,7 +155,7 @@ describe('Employees', function() {
           });
 
           it('should set the employee to not deleted for the ui', function () {
-            $scope.restore(employee);
+            controller.restore(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.false;
           });
@@ -173,7 +168,7 @@ describe('Employees', function() {
           });
 
           it('should set deleted to true for the employee in the ui', function () {
-            $scope.restore(employee);
+            controller.restore(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.true;
           });
@@ -183,7 +178,7 @@ describe('Employees', function() {
       describe('cancel', function () {
         it('should return back to the employee list', function () {
           $httpBackend.flush();
-          $scope.cancel();
+          controller.cancel();
           expect(spies.state.go).to.have.been.calledWith('app.employees');
         });
       });
@@ -195,9 +190,7 @@ describe('Employees', function() {
       beforeEach(function() {
         spies.state.current = {data: {saveText: 'update'}};
 
-        $scope = $rootScope.$new();
         controller = $controller("EmployeeDetailCtrl", {
-          $scope: $scope,
           employee: new api.employees(employee)
         });
       });
@@ -208,12 +201,12 @@ describe('Employees', function() {
         });
 
         it('should set saveText to the current state saveText', function () {
-          expect($scope.saveText).to.equal('update');
+          expect(controller.saveText).to.equal('update');
         });
 
         it('should set the employee on scope to the resolved employee', function () {
-          expect($scope.employee._id).to.equal(employee._id);
-          expect($scope.employee.username).to.equal(employee.username);
+          expect(controller.employee._id).to.equal(employee._id);
+          expect(controller.employee.username).to.equal(employee.username);
         });
       });
 
@@ -232,9 +225,9 @@ describe('Employees', function() {
           });
 
           it('should set the employee on scope to be the updated employee', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
-            expect($scope.employee.username).to.equal(updatedEmployee.username);
+            expect(controller.employee.username).to.equal(updatedEmployee.username);
           });
         });
 
@@ -246,9 +239,7 @@ describe('Employees', function() {
       beforeEach(function() {
         spies.state.current = {data: {saveText: 'create'}};
 
-        $scope = $rootScope.$new();
         controller = $controller("EmployeeCreateCtrl", {
-          $scope: $scope,
           $state: spies.state,
           $stateParams: $stateParams
         });
@@ -260,12 +251,12 @@ describe('Employees', function() {
         });
 
         it('should set saveText to the current state saveText', function () {
-          expect($scope.saveText).to.equal('create');
+          expect(controller.saveText).to.equal('create');
         });
         
         it('should set the employee on scope to a non admin user', function () {
-          expect($scope.employee.admin).to.be.false;
-          expect($scope.employee.username).to.be.empty;
+          expect(controller.employee.admin).to.be.false;
+          expect(controller.employee.username).to.be.empty;
         });
       }); 
 
@@ -281,10 +272,10 @@ describe('Employees', function() {
             $httpBackend.when('POST', '/users').respond(200, employee);
           });
 
-          it('should transition to the detail page of the created employee', function () {
-            $scope.save();
+          it('should transition to the employee page', function () {
+            controller.save();
             $httpBackend.flush();
-            expect(spies.state.go).to.have.been.calledWith('app.employees.detail', {_id: employee._id});
+            expect(spies.state.go).to.have.been.calledWith('app.employees');
           });
         });
       });

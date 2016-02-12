@@ -14,11 +14,8 @@ describe('App', function() {
       ));
 
     describe('MainCtrl', function() {
-      beforeEach(inject(function($rootScope, $controller) {
-        scope = $rootScope.$new();
-        controller = $controller("MainCtrl", { 
-          $scope: scope 
-        });
+      beforeEach(inject(function($controller) {
+        controller = $controller("MainCtrl");
       }));
 
       describe('setup', function () {
@@ -30,11 +27,8 @@ describe('App', function() {
 
     describe('AppCtrl', function() {
 
-      beforeEach(inject(function($rootScope, $controller) {
-        scope = $rootScope.$new();
-        controller = $controller("AppCtrl", { 
-          $scope: scope 
-        });
+      beforeEach(inject(function($controller) {
+        controller = $controller("AppCtrl");
       }));
 
       describe('setup', function () {
@@ -46,11 +40,8 @@ describe('App', function() {
 
     describe('NavCtrl', function() {
 
-      beforeEach(inject(function($rootScope, $controller) {
-        scope = $rootScope.$new();
-        controller = $controller("NavCtrl", { 
-          $scope: scope 
-        });
+      beforeEach(inject(function($controller) {
+        controller = $controller("NavCtrl");
       }));
 
       describe('setup', function () {

@@ -8,11 +8,10 @@
     <meta name="description" content="Timesheet Demo Application"/>
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css"/>
   </head>
-  <body ng-controller="MainCtrl">
+  <body ng-controller="MainCtrl as mainCtrl">
     <div ng-cloak="ng-cloak" class="tsz-page-container">
       <div ui-view="navbar"></div>
       <div ui-view="content"></div>
-      <div ui-view="login"></div>
     </div>
     <!-- Shims-->
     <script src="assets/js/components/modernizr/modernizr.js"></script>
@@ -32,10 +31,7 @@
     <script src="assets/js/components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="assets/js/components/angular-ui-select2/src/select2.js"></script>
     <script src="assets/js/components/angular-ui-bootstrap/src/position/position.js"></script>
-    <script src="assets/js/components/angular-ui-bootstrap/src/isClass/isClass.js"></script>
-    <script src="assets/js/components/angular-ui-bootstrap/src/dateparser/dateparser.js"></script>
     <script src="assets/js/components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
-    <script src="assets/js/components/angular-ui-bootstrap/src/paging/paging.js"></script>
     <script src="assets/js/components/angular-ui-bootstrap/src/pagination/pagination.js"></script>
     <script src="assets/js/components/angular-ui-bootstrap/src/buttons/buttons.js"></script>
     <!--NProgress-->
@@ -57,7 +53,6 @@
     <script src="src/directives/form.js"></script>
     <script src="src/interceptors/progress.js"></script>
     <script src="src/main.js"></script>
-    <script src="src/security/interceptors/security.js"></script>
     <script src="src/services/date.utils.js"></script>
     <script src="assets/templates/main.templates.js"></script>
     <script src="assets/templates/lib.templates.js"></script>
