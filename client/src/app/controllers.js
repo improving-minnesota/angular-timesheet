@@ -3,16 +3,15 @@ angular.module('app.controllers', [])
   .controller('MainCtrl', function () {
 
   })
-  
-  .controller('AppCtrl', 
+
+  .controller('AppCtrl',
     function () {
       var vm = this;
       vm.demo = {};
     }
   )
 
-  .controller('NavCtrl', 
+  .controller('NavCtrl',
     function () {
-
     }
   );
