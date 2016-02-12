@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     'modernizr/modernizr.js',
 
     // jQuery and Related
-    'jquery/jquery.js',
+    'jquery/dist/jquery.js',
     'select2/select2.js',
     'messenger/build/js/messenger.js',
 
