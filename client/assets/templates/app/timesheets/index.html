@@ -13,7 +13,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="timesheet in timesheets" 
+            <tr ng-repeat="timesheet in timesheetCtrl.timesheets"
               class="fadeable-row"
               ng-class="{faded: timesheet.deleted}">
 
@@ -24,10 +24,10 @@
               <td>
                 <div ng-switch="timesheet.deleted">
                   <div ng-switch-when="true">
-                    <button class="btn btn-sm btn-default" ng-click="restore(timesheet); $event.stopPropagation();">Restore</button>
+                    <button class="btn btn-sm btn-default" ng-click="timesheetCtrl.restore(timesheet); $event.stopPropagation();">Restore</button>
                   </div>
                   <div ng-switch-default>
-                      <button class="btn btn-sm btn-danger" ng-click="remove(timesheet); $event.stopPropagation();">Delete</button>
+                      <button class="btn btn-sm btn-danger" ng-click="timesheetCtrl.remove(timesheet); $event.stopPropagation();">Delete</button>
                   </div>
                 </div>
               </td>

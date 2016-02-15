@@ -1,12 +1,12 @@
 describe('App', function() {
 
   var expect = chai.expect;
-  var controller, scope;
- 
+  var controller;
+
   describe('Controllers', function() {
-      
+
     beforeEach(
-      module( 
+      module(
         'app.resources',
         'ngResource',
         'app.controllers'
@@ -14,49 +14,40 @@ describe('App', function() {
 
     describe('MainCtrl', function() {
       beforeEach(inject(function($rootScope, $controller) {
-        scope = $rootScope.$new();
-        controller = $controller("MainCtrl", { 
-          $scope: scope 
-        });
+        controller = $controller("MainCtrl");
       }));
 
       describe('setup', function () {
-        it('should be able to instantiate the controller', function () { 
+        it('should be able to instantiate the controller', function () {
           expect(controller).to.be.ok;
         });
-      }); 
+      });
     });
 
     describe('AppCtrl', function() {
 
       beforeEach(inject(function($rootScope, $controller) {
-        scope = $rootScope.$new();
-        controller = $controller("AppCtrl", { 
-          $scope: scope 
-        });
+        controller = $controller("AppCtrl");
       }));
 
       describe('setup', function () {
-        it('should be able to instantiate the controller', function () { 
+        it('should be able to instantiate the controller', function () {
           expect(controller).to.be.ok;
         });
-      }); 
+      });
     });
 
     describe('NavCtrl', function() {
 
       beforeEach(inject(function($rootScope, $controller) {
-        scope = $rootScope.$new();
-        controller = $controller("NavCtrl", { 
-          $scope: scope 
-        });
+        controller = $controller("NavCtrl");
       }));
 
       describe('setup', function () {
-        it('should be able to instantiate the controller', function () { 
+        it('should be able to instantiate the controller', function () {
           expect(controller).to.be.ok;
         });
-      }); 
+      });
     });
 
   });

@@ -11,7 +11,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="project in projects" 
+            <tr ng-repeat="project in projectCtrl.projects"
               class="fadeable-row"
               ng-class="{faded: project.deleted}">
 
@@ -20,10 +20,10 @@
               <td>
                 <div ng-switch="project.deleted">
                   <div ng-switch-when="true">
-                    <button class="btn btn-sm btn-default" ng-click="restore(project); $event.stopPropagation();">Restore</button>
+                    <button class="btn btn-sm btn-default" ng-click="projectCtrl.restore(project); $event.stopPropagation();">Restore</button>
                   </div>
                   <div ng-switch-default>
-                    <button class="btn btn-sm btn-danger" ng-click="remove(project); $event.stopPropagation();">Delete</button>
+                    <button class="btn btn-sm btn-danger" ng-click="projectCtrl.remove(project); $event.stopPropagation();">Delete</button>
                   </div>
                 </div>
               </td>

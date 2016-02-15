@@ -1,40 +1,42 @@
 angular.module('app.employees.controllers', [])
-  
-  .controller('EmployeeCtrl', 
-    function (data, $scope) {
 
-      $scope.requestEmployees = function requestEmployees (page) {
+  .controller('EmployeeCtrl',
+    function (data) {
+
+      var vm = this;
+
+      vm.requestEmployees = function requestEmployees (page) {
 
         data.list('employees')
           .then(function (employees) {
-            $scope.employees = employees;
+            vm.employees = employees;
           });
       };
 
-      $scope.remove = function remove (employee) {
+      vm.remove = function remove (employee) {
 
-        data.remove('employees', employee) 
+        data.remove('employees', employee)
           .then(function () {
             console.log('success!');
           })
           .catch(function (x) {
             employee.deleted = false;
-            console.log('error : ' + x);
+            console.log('error : ' + JSON.stringify(x));
           });
       };
 
-      $scope.restore = function restore (employee) {
-       
+      vm.restore = function restore (employee) {
+
        data.restore('employees', employee)
           .then(function (restored) {
             console.log('success!');
           })
           .catch(function (x) {
             employee.deleted = true;
-            console.log('error : ' + x);
+            console.log('error : ' + JSON.stringify(x));
           });
       };
 
-      $scope.requestEmployees(1);
+      vm.requestEmployees(1);
     }
   );

@@ -1,20 +1,18 @@
 describe('Timesheets', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
-    controller, 
+    controller,
     timesheet,
     timeunits,
     employee,
     spies;
- 
+
   describe('Controllers', function() {
-      
+
     beforeEach(
       module(
         'app.resources',
@@ -23,8 +21,7 @@ describe('Timesheets', function() {
         'app.timesheets.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
     }));
@@ -58,29 +55,26 @@ describe('Timesheets', function() {
     describe('TimesheetCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
-        controller = $controller("TimesheetCtrl", { 
-          $scope: $scope
-        });
+        controller = $controller("TimesheetCtrl");
 
         $httpBackend.when('GET', '/users/all/timesheets').respond(200, [{name: 'testTimesheet'}]);
       });
 
       describe('during setup', function () {
-        it('should be able to instantiate the controller and request a page of timesheets', function () { 
-          expect(controller).to.be.ok; 
-          // $scope.requestTimesheets is called upon controller creation
+        it('should be able to instantiate the controller and request a page of timesheets', function () {
+          expect(controller).to.be.ok;
+          // controller.requestTimesheets is called upon controller creation
           $httpBackend.expect('GET', '/users/all/timesheets');
           $httpBackend.flush();
         });
-      }); 
+      });
 
       describe('requesting timesheets', function () {
         it('should set the result to the timesheets', function () {
           $httpBackend.expect('GET', '/users/all/timesheets');
-          $scope.requestTimesheets();
+          controller.requestTimesheets();
           $httpBackend.flush();
-          expect($scope.timesheets[0].name).to.equal("testTimesheet");
+          expect(controller.timesheets[0].name).to.equal("testTimesheet");
         });
       });
 
@@ -89,7 +83,7 @@ describe('Timesheets', function() {
         it('should send a remove request for the specified timesheet', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/1234567890/timesheets/' + timesheet._id).respond(200);
-          $scope.remove(timesheet);
+          controller.remove(timesheet);
           $httpBackend.flush();
         });
 
@@ -100,7 +94,7 @@ describe('Timesheets', function() {
           });
 
           it('should set the timesheet to deleted for the ui', function () {
-            $scope.remove(timesheet);
+            controller.remove(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.true;
           });
@@ -113,7 +107,7 @@ describe('Timesheets', function() {
           });
 
           it('should set deleted to false for the timesheet in the ui', function () {
-            $scope.remove(timesheet);
+            controller.remove(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.false;
           });
@@ -129,7 +123,7 @@ describe('Timesheets', function() {
         it('should send a restore request for the specified timesheet', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/1234567890/timesheets/' + timesheet._id).respond(200);
-          $scope.restore(timesheet);
+          controller.restore(timesheet);
           $httpBackend.flush();
         });
 
@@ -140,7 +134,7 @@ describe('Timesheets', function() {
           });
 
           it('should set the timesheet to not deleted for the ui', function () {
-            $scope.restore(timesheet);
+            controller.restore(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.false;
           });
@@ -153,7 +147,7 @@ describe('Timesheets', function() {
           });
 
           it('should set deleted to true for the timesheet in the ui', function () {
-            $scope.restore(timesheet);
+            controller.restore(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.true;
           });
