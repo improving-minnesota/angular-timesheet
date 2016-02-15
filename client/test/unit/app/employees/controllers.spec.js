@@ -1,18 +1,16 @@
 describe('Employees', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
-    controller, 
+    controller,
     employee,
     spies;
- 
+
   describe('Controllers:', function() {
-      
+
     beforeEach(
       module(
         'ngResource',
@@ -21,8 +19,7 @@ describe('Employees', function() {
         'app.employees.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
     }));
@@ -31,11 +28,11 @@ describe('Employees', function() {
 
       employee = {
         "_id": "1234567890",
-        "username": "test", 
-        "email": "test@test.com", 
-        "password": "password", 
-        "admin": true, 
-        "firstName": "Test", 
+        "username": "test",
+        "email": "test@test.com",
+        "password": "password",
+        "admin": true,
+        "firstName": "Test",
         "lastName": "User"
       };
     }));
@@ -48,30 +45,26 @@ describe('Employees', function() {
     describe('EmployeeCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
-        controller = $controller("EmployeeCtrl", { 
-          $scope: $scope
-        });
-
+        controller = $controller("EmployeeCtrl");
         $httpBackend.when('GET', '/users').respond(200, [{username: 'testUser'}]);
       });
 
       describe('during setup', function () {
-        it('should be able to instantiate the controller and request a page of employees', function () { 
-          expect(controller).to.be.ok; 
+        it('should be able to instantiate the controller and request a page of employees', function () {
+          expect(controller).to.be.ok;
           $httpBackend.expect('GET', '/users');
           $httpBackend.flush();
         });
-      }); 
+      });
 
       describe('requesting employees', function () {
 
         it('should set the result to the employees', function () {
           $httpBackend.expect('GET', '/users');
-          $scope.requestEmployees();
+          controller.requestEmployees();
           $httpBackend.flush();
-          expect($scope.employees[0].username).to.equal("testUser");
-        }); 
+          expect(controller.employees[0].username).to.equal("testUser");
+        });
 
       });
 
@@ -80,7 +73,7 @@ describe('Employees', function() {
         it('should send a remove request for the specified employee', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/' + employee._id).respond(200);
-          $scope.remove(employee);
+          controller.remove(employee);
           $httpBackend.flush();
         });
 
@@ -91,7 +84,7 @@ describe('Employees', function() {
           });
 
           it('should set the employee to deleted for the ui', function () {
-            $scope.remove(employee);
+            controller.remove(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.true;
           });
@@ -104,7 +97,7 @@ describe('Employees', function() {
           });
 
           it('should set deleted to false for the employee in the ui', function () {
-            $scope.remove(employee);
+            controller.remove(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.false;
           });
@@ -120,7 +113,7 @@ describe('Employees', function() {
         it('should send a restore request for the specified employee', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/' + employee._id).respond(200);
-          $scope.restore(employee);
+          controller.restore(employee);
           $httpBackend.flush();
         });
 
@@ -131,7 +124,7 @@ describe('Employees', function() {
           });
 
           it('should set the employee to not deleted for the ui', function () {
-            $scope.restore(employee);
+            controller.restore(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.false;
           });
@@ -144,7 +137,7 @@ describe('Employees', function() {
           });
 
           it('should set deleted to true for the employee in the ui', function () {
-            $scope.restore(employee);
+            controller.restore(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.true;
           });

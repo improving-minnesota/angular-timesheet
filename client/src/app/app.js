@@ -11,18 +11,20 @@ angular.module('app', [
   $routeProvider.
     when('/projects', {
       templateUrl: 'assets/templates/app/projects/index.html',
-      controller: 'ProjectCtrl'
+      controller: 'ProjectCtrl',
+      controllerAs: 'projectCtrl'
     })
     .when('/employees', {
       templateUrl: 'assets/templates/app/employees/index.html',
-      controller: 'EmployeeCtrl'
+      controller: 'EmployeeCtrl',
+      controllerAs: 'employeeCtrl'
     })
     .when('/timesheets', {
       templateUrl: 'assets/templates/app/timesheets/index.html',
-      controller: 'TimesheetCtrl'
+      controller: 'TimesheetCtrl',
+      controllerAs: 'timesheetCtrl'
     })
     .otherwise({
       redirectTo: '/projects'
     });
 });
-  

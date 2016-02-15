@@ -1,44 +1,45 @@
 angular.module('app.timesheets.controllers', [])
 
-  .controller('TimesheetCtrl', 
-    function (data, $scope) {
+  .controller('TimesheetCtrl',
+    function (data) {
 
-      $scope.requestTimesheets = function requestTimesheets (page) {
+      var vm = this;
+
+      vm.requestTimesheets = function requestTimesheets (page) {
         var query = {
           user_id: 'all'
         };
 
         data.list('timesheets', query)
           .then(function (timesheets) {
-            $scope.timesheets = timesheets;
+            vm.timesheets = timesheets;
           });
       };
 
-      $scope.remove = function remove (timesheet) {
+      vm.remove = function remove (timesheet) {
 
         data.remove('timesheets', timesheet)
           .then(function () {
             console.log('success !');
           })
-          .catch(function (x) {  
+          .catch(function (x) {
             timesheet.deleted = false;
-            console.log('error ' + x);
+            console.log('error: ' + JSON.stringify(x));
           });
       };
 
-      $scope.restore = function restore (timesheet) {
-        
+      vm.restore = function restore (timesheet) {
+
         data.restore('timesheets', timesheet)
           .then(function (restored) {
             console.log('success !');
           })
           .catch(function (x) {
             timesheet.deleted = true;
-            console.log('error ' + x);
+            console.log('error: ' + JSON.stringify(x));
           });
       };
 
-      $scope.requestTimesheets(1);
+      vm.requestTimesheets(1);
     }
   );
-    
