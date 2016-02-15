@@ -2,7 +2,7 @@
   <div ng-show="$state.is('app.employees')">
     <div class="row tsz-form-row">
       <div class="col-sm-2 pull-right">
-        <button class="btn btn-primary btn-block" type="button" ng-click="createNew()">
+        <button class="btn btn-primary btn-block" type="button" ng-click="employeeCtrl.createNew()">
           <i class="icon-plus"></i>
           New Employee
         </button>
@@ -18,14 +18,14 @@
               <th>First Name</th>
               <th>Last Name</th>
               <th>Admin</th>
-              <th  class="tsz-table-delete-column">Delete</th>
+              <th class="tsz-table-delete-column">Delete</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="employee in employees" 
+            <tr ng-repeat="employee in employeeCtrl.employees" 
               class="fadeable-row"
               ng-class="{faded: employee.deleted}"
-              ng-click="showDetail(employee)">
+              ng-click="employeeCtrl.showDetail(employee)">
 
               <td>{{employee.username}}</td>
               <td>{{employee.email}}</td>
@@ -35,10 +35,10 @@
               <td>
                 <div ng-switch="employee.deleted">
                   <div ng-switch-when="true">
-                    <button class="btn btn-sm btn-default" ng-click="restore(employee); $event.stopPropagation();">Restore</button>
+                    <button class="btn btn-sm btn-default" ng-click="employeeCtrl.restore(employee); $event.stopPropagation();">Restore</button>
                   </div>
                   <div ng-switch-default>
-                    <button class="btn btn-sm btn-danger" ng-click="remove(employee); $event.stopPropagation();">Delete</button>
+                    <button class="btn btn-sm btn-danger" ng-click="employeeCtrl.remove(employee); $event.stopPropagation();">Delete</button>
                   </div>
                 </div>
               </td>
