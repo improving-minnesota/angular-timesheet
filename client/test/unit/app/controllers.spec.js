@@ -13,7 +13,7 @@ describe('App', function() {
       ));
 
     describe('MainCtrl', function() {
-      beforeEach(inject(function($rootScope, $controller) {
+      beforeEach(inject(function($controller) {
         controller = $controller("MainCtrl");
       }));
 
@@ -26,7 +26,7 @@ describe('App', function() {
 
     describe('AppCtrl', function() {
 
-      beforeEach(inject(function($rootScope, $controller) {
+      beforeEach(inject(function($controller) {
         controller = $controller("AppCtrl");
       }));
 
@@ -39,7 +39,7 @@ describe('App', function() {
 
     describe('NavCtrl', function() {
 
-      beforeEach(inject(function($rootScope, $controller) {
+      beforeEach(inject(function($controller) {
         controller = $controller("NavCtrl");
       }));
 
