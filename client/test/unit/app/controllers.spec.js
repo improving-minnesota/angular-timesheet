@@ -1,7 +1,7 @@
 describe('App', function() {
 
   var expect = chai.expect;
-  var controller, scope;
+  var controller;
  
   describe('Controllers', function() {
       
@@ -12,8 +12,7 @@ describe('App', function() {
     describe('MainCtrl', function() {
 
       // TODO : set up a beforeEach block to create the test controller
-      // 1. assign scope to a new root scope
-      // 2. assign the MainCtrl to the test controller and inject scope
+      // 1. assign the MainCtrl to the test controller
 
       describe('setup', function () {
 
@@ -24,8 +23,7 @@ describe('App', function() {
     describe('AppCtrl', function() {
 
       // TODO : set up a beforeEach block to create the test controller
-      // 1. assign scope to a new root scope
-      // 2. assign the AppCtrl to the test controller and inject scope
+      // 1. assign the AppCtrl to the test controller
       
 
       describe('setup', function () {
