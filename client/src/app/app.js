@@ -8,7 +8,8 @@ angular.module('app', [
   $routeProvider
     .when("/home", {
       templateUrl: 'assets/templates/index.html',
-      controller: 'AppCtrl'
+      controller: 'AppCtrl',
+      controllerAs: 'appCtrl'
     })
     .otherwise({redirectTo: '/home'});
 });
