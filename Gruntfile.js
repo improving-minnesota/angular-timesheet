@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     'modernizr/modernizr.js',
 
     // jQuery and Related
-    'jquery/jquery.js',
+    'jquery/dist/jquery.js',
     'select2/select2.js',
     'messenger/build/js/messenger.js',
 
@@ -152,7 +152,7 @@ module.exports = function (grunt) {
           '<%= components %>/select2/select2.css',
           '<%= components %>/nprogress/nprogress.css',
           '<%= components %>/messenger/build/css/messenger.css',
-          //'<%= components %>/messenger/build/css/messenger-theme-future.css',
+          //'<%= components %>/messenger/build/css/messenger-theme-air.css',
           '<%= components %>/messenger/build/css/messenger-spinner.css',
           '<%= clientdist %>/assets/css/style.css'
         ],
@@ -381,7 +381,8 @@ module.exports = function (grunt) {
       server: {
         options: {
           stdout: true,
-          stderror: true
+          stderror: true,
+          execOptions: {maxBuffer: 1024*4000}
         },
         command: 'node api/server.js'
       }
