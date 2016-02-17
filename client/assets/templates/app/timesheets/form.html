@@ -7,7 +7,7 @@
           <div tsz-field-wrap input-id="timesheet-name" label="Name">
             <input type="text" class="form-control" 
               name="timesheet-name" placeholder="Timesheet Name"
-              ng-model="timesheet.name">
+              ng-model="timesheetFormCtrl.timesheet.name">
           </div>
         </div>
 
@@ -15,7 +15,7 @@
           <div tsz-field-wrap input-id="timesheet-description" label="Description">
             <input type="text" class="form-control" 
               name="timesheet-description" placeholder="Timesheet Description"
-              ng-model="timesheet.description">
+              ng-model="timesheetFormCtrl.timesheet.description">
           </div>
         </div>
 
@@ -24,7 +24,7 @@
             <div class="input-group">
               <input type="text" class="form-control" 
                 datepicker-popup="MM/dd/yyyy"
-                ng-model="timesheet.beginDate"  
+                ng-model="timesheetFormCtrl.timesheet.beginDate"  
                 show-weeks="false"
                 show-button-bar="false"
                 ng-required="true" 
@@ -43,10 +43,10 @@
             <div class="input-group">
               <input type="text" class="form-control" 
                 datepicker-popup="MM/dd/yyyy"
-                ng-model="timesheet.endDate"  
+                ng-model="timesheetFormCtrl.timesheet.endDate"  
                 show-weeks="false"
                 show-button-bar="false"
-                min="timesheet.beginDate"
+                min="timesheetFormCtrl.timesheet.beginDate"
                 ng-required="true" 
                 close-text="Close" />
               <span class="input-group-btn">
@@ -65,10 +65,10 @@
         <div class="row">
           <div class="col-sm-2 col-sm-offset-8">
             <button class="btn btn-primary btn-block" 
-              ng-click="save()">{{saveText}}</button>
+              ng-click="timesheetFormCtrl.save()">{{timesheetFormCtrl.saveText}}</button>
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-danger btn-block" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-danger btn-block" ng-click="timesheetFormCtrl.cancel()">Cancel</button>
           </div>
         </div>
       </form>

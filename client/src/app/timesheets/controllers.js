@@ -1,9 +1,10 @@
 angular.module('app.timesheets.controllers', [])
 
   .controller('TimesheetCtrl', 
-    function (data, $scope, $state, $stateParams) {
+    function (data, $state, $stateParams) {
+      var vm = this;
 
-      $scope.requestTimesheets = function requestTimesheets (page) {
+      vm.requestTimesheets = function requestTimesheets (page) {
 
         var query = {
           user_id: $stateParams.user_id
@@ -11,11 +12,11 @@ angular.module('app.timesheets.controllers', [])
 
         data.list('timesheets', query)
           .then(function (timesheets) {
-            $scope.timesheets = timesheets;
+            vm.timesheets = timesheets;
           });
       };
 
-      $scope.showDetail = function showDetail (timesheet) {
+      vm.showDetail = function showDetail (timesheet) {
         if (timesheet.deleted) {
           console.log('error : cannot view a deleted timesheet');
           return;
@@ -23,11 +24,11 @@ angular.module('app.timesheets.controllers', [])
         $state.go('app.timesheets.detail', timesheet);
       };
 
-      $scope.createNew = function createNew () {
+      vm.createNew = function createNew () {
         $state.go('app.timesheets.create', $stateParams);
       };
 
-      $scope.remove = function remove (timesheet) {
+      vm.remove = function remove (timesheet) {
 
         data.remove('timesheets', timesheet)
           .then(function () {
@@ -35,11 +36,11 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {  
             timesheet.deleted = false;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
 
-      $scope.restore = function restore (timesheet) {
+      vm.restore = function restore (timesheet) {
         
         data.restore('timesheets', timesheet)
           .then(function (restored) {
@@ -47,32 +48,34 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {
             timesheet.deleted = true;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
 
-      $scope.requestTimesheets(1);
+      vm.requestTimesheets(1);
     }
   )
 
   .controller('TimesheetDetailCtrl', 
-    function ($scope, $state, $stateParams, data, timesheet, timeunits) {
-      $scope.timesheet = timesheet;
-      $scope.timeunits = timeunits;
+    function ($state, $stateParams, data, timesheet, timeunits) {
+      var vm = this;
 
-      $scope.edit = function edit (timesheet) {
+      vm.timesheet = timesheet;
+      vm.timeunits = timeunits;
+
+      vm.edit = function edit (timesheet) {
         $state.go('app.timesheets.detail.edit', $stateParams);
       };
 
-      $scope.cancel = function cancel () {
+      vm.cancel = function cancel () {
         $state.go('app.timesheets', $stateParams, {reload: true});
       };
 
-      $scope.logTime = function logTime () {
+      vm.logTime = function logTime () {
         $state.go('app.timesheets.detail.timeunits.create', $stateParams);
       };
 
-      $scope.showTimeunitDetail = function showTimeunitDetail (timeunit) {
+      vm.showTimeunitDetail = function showTimeunitDetail (timeunit) {
         if (timeunit.deleted) {
             console.log('error ' + x);
           return;
@@ -82,7 +85,7 @@ angular.module('app.timesheets.controllers', [])
         $state.go('app.timesheets.detail.timeunits.edit', $stateParams);
       };
 
-      $scope.removeTimeunit = function removeTimeunit (timeunit) {
+      vm.removeTimeunit = function removeTimeunit (timeunit) {
         timeunit.user_id = timesheet.user_id;
 
         data.remove('timeunits', timeunit) 
@@ -91,13 +94,13 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {
             timeunit.deleted = false;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
 
           console.log("remove");
       };
 
-      $scope.restoreTimeunit = function restoreTimeunit (timeunit) {
+      vm.restoreTimeunit = function restoreTimeunit (timeunit) {
         timeunit.user_id = timesheet.user_id;
 
         data.restore('timeunits', timeunit)
@@ -106,53 +109,58 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {
             timeunit.deleted = true;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
     } 
   )
 
   .controller('TimesheetEditCtrl', 
-    function ($scope, $state, $stateParams, data, timesheet) {
-      $scope.saveText = $state.current.data.saveText;
-      $scope.timesheet = timesheet;
+    function ($state, $stateParams, data, timesheet) {
+      var vm = this;
 
-      $scope.save = function save () {
-        $scope.timesheet.$update()
+      vm.saveText = $state.current.data.saveText;
+      vm.timesheet = timesheet;
+
+      vm.save = function save () {
+        vm.timesheet.$update()
           .then(function (updated) {
-            $scope.timesheet = updated;
+            vm.timesheet = updated;
+            $state.go('app.timesheets', $stateParams, {reload: true});
             console.log('success !');
           })
           .catch(function (x) {
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
 
-      $scope.cancel = function cancel () {
+      vm.cancel = function cancel () {
         $state.go('app.timesheets.detail', $stateParams, {reload: true});
       };
     }
   )
 
   .controller('TimesheetCreateCtrl', 
-    function ($scope, $state, $stateParams, data) {
-      $scope.saveText = $state.current.data.saveText;
-      $scope.timesheet = {};
+    function ($state, $stateParams, data) {
+      var vm = this;
 
-      $scope.save = function save () {
-        var timesheet = angular.extend({user_id: $stateParams.user_id}, $scope.timesheet);
+      vm.saveText = $state.current.data.saveText;
+      vm.timesheet = {};
+
+      vm.save = function save () {
+        var timesheet = angular.extend({user_id: $stateParams.user_id}, vm.timesheet);
 
         data.create('timesheets', timesheet)
           .then(function (created) {
-            $state.go('app.timesheets.detail', {user_id: $stateParams.user_id, _id: created._id});
+            $state.go('app.timesheets', $stateParams, {reload: true});
             console.log('success !');
           })
           .catch(function (x) {
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
 
-      $scope.cancel = function cancel () {
+      vm.cancel = function cancel () {
         $state.go('app.timesheets', $stateParams, {reload: true});
       };
     }
