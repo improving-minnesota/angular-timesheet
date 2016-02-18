@@ -1,6 +1,5 @@
 describe('Security', function () {
-  var ptor;
-
+	
   describe("An unauthenticated user that opens the application", function () {
     beforeEach (function () {
       browser.get("/");
