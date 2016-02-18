@@ -1,11 +1,9 @@
 describe('Projects', function () {
-  var ptor,
-    indexPage = require('./index.page.js'),
+  var indexPage = require('./index.page.js'),
     formPage = require('./form.page.js');
 
   beforeEach (function () {
     indexPage.get();
-    ptor = protractor.getInstance();
   });
 
   describe('List Page', function () {
@@ -57,18 +55,16 @@ describe('Projects', function () {
       });
 
       it('should be able to update the project', function () {
-
         formPage
           .enterValue('project.name', 'newProjectName')
           .saveForm('Update');
 
-        browser.sleep(2);
+        browser.sleep(3000);
 
         expect(formPage.successMessage()).toContain('Updated project: ');
       });
 
       it('should return back to the index page on cancel', function () {
-        browser.debugger();
         formPage.cancelForm();
         expect(indexPage.getPageTitle()).toBe("Projects");
       });

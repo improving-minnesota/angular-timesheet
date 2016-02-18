@@ -19,10 +19,10 @@ function EmployeesIndexPage() {
     this.firstEmployee.click();
   };
   this.deleteFirstEmployee = function () {
-    this.firstEmployee.findElement(by.buttonText('Delete')).click();
+    this.firstEmployee.element(by.buttonText('Delete')).click();
   };
   this.restoreFirstEmployee = function () {
-    this.firstEmployee.findElement(by.buttonText('Restore')).click();
+    this.firstEmployee.element(by.buttonText('Restore')).click();
   };
 }
 
