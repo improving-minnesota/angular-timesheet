@@ -1,12 +1,10 @@
 describe('Projects', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     project,
     spies;
@@ -21,8 +19,7 @@ describe('Projects', function() {
         'app.projects.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
     }));
@@ -44,10 +41,7 @@ describe('Projects', function() {
     describe('ProjectCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
-        controller = $controller("ProjectCtrl", { 
-          $scope: $scope
-        });
+        controller = $controller("ProjectCtrl");
         
         $httpBackend.when('GET', '/projects').respond(200, [{name: 'project1'}]);
       });
@@ -63,9 +57,9 @@ describe('Projects', function() {
       describe('requesting projects', function () {
         it('should set the result to the projects', function () {
           $httpBackend.expect('GET', '/projects');
-          $scope.requestProjects();
+          controller.requestProjects();
           $httpBackend.flush();
-          expect($scope.projects[0].name).to.equal("project1");
+          expect(controller.projects[0].name).to.equal("project1");
         }); 
       });
 
@@ -74,7 +68,7 @@ describe('Projects', function() {
         it('should send a remove request for the specified project', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/projects/' + project._id).respond(200);
-          $scope.remove(project);
+          controller.remove(project);
           $httpBackend.flush();
         });
 
@@ -85,7 +79,7 @@ describe('Projects', function() {
           });
 
           it('should set the project to deleted for the ui', function () {
-            $scope.remove(project);
+            controller.remove(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.true;
           });
@@ -98,7 +92,7 @@ describe('Projects', function() {
           });
 
           it('should set deleted to false for the project in the ui', function () {
-            $scope.remove(project);
+            controller.remove(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.false;
           });
@@ -114,7 +108,7 @@ describe('Projects', function() {
         it('should send a restore request for the specified project', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/projects/' + project._id).respond(200);
-          $scope.restore(project);
+          controller.restore(project);
           $httpBackend.flush();
         });
 
@@ -125,7 +119,7 @@ describe('Projects', function() {
           });
 
           it('should set the project to not deleted for the ui', function () {
-            $scope.restore(project);
+            controller.restore(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.false;
           });
@@ -138,7 +132,7 @@ describe('Projects', function() {
           });
 
           it('should set deleted to true for the project in the ui', function () {
-            $scope.restore(project);
+            controller.restore(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.true;
           });

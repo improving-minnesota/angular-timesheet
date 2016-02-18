@@ -1,28 +1,29 @@
 angular.module('app.projects.controllers', [])
     
   .controller('ProjectCtrl', 
-    function (data, $scope) { 
+    function (data) {
+      var vm = this;
 
-      $scope.requestProjects = function requestProjects (page) {
+      vm.requestProjects = function requestProjects (page) {
         
         data.list('projects')
           .then(function (projects) {
-            $scope.projects = projects;
+            vm.projects = projects;
           });
       };
 
-      $scope.remove = function remove (project) {
+      vm.remove = function remove (project) {
         data.remove('projects', project)
           .then(function (removed) {
             console.log('success !');
           })
           .catch(function (x) {
             project.deleted = false;
-            console.log('error : ' + x);
+            console.log('error : ' + JSON.stringify(x));
           });
       };
 
-      $scope.restore = function restore (project) { 
+      vm.restore = function restore (project) { 
 
         data.restore('projects', project) 
           .then(function (restored) {
@@ -30,10 +31,10 @@ angular.module('app.projects.controllers', [])
           })
           .catch(function (x) {
             project.deleted = true;
-            console.log('error : ' + x);
+            console.log('error : ' + JSON.stringify(x));
           });
       };
 
-      $scope.requestProjects(1);
+      vm.requestProjects(1);
     }
   );
