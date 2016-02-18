@@ -1,10 +1,11 @@
 angular.module('app.timesheets.controllers', [])
 
   .controller('TimesheetCtrl', 
-    function (data, $scope) {
+    function (data) {
+      var vm = this;
 
-      // TODO : implement a function on scope to request timesheets
-      $scope.requestTimesheets = function requestTimesheets () {
+      // TODO : implement a function on controller to request timesheets
+      vm.requestTimesheets = function requestTimesheets () {
         // Since the server expects a user_id in the request url, we can send 'all'
         // for now which will return every timesheet. 
         var query = {
@@ -13,9 +14,9 @@ angular.module('app.timesheets.controllers', [])
 
       };
 
-      // TODO : implement a function on scope to soft delete a timesheet
-      // TODO : implement a function on scope to restore a deleted timesheet
-      // TODO : initialize scope by calling requestTimesheets
+      // TODO : implement a function on controller to soft delete a timesheet
+      // TODO : implement a function on controller to restore a deleted timesheet
+      // TODO : initialize controller by calling requestTimesheets
       
     }
   );

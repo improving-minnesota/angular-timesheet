@@ -1,12 +1,10 @@
 describe('Timesheets', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     timesheet,
     timeunits,
@@ -23,8 +21,7 @@ describe('Timesheets', function() {
         'app.timesheets.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
     }));
@@ -58,10 +55,7 @@ describe('Timesheets', function() {
     describe('TimesheetCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
-        controller = $controller("TimesheetCtrl", { 
-          $scope: $scope
-        });
+        controller = $controller("TimesheetCtrl");
 
         // TODO : set up a response for api calls to get a list of timesheets
       });

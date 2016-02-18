@@ -1,12 +1,10 @@
 describe('Employees', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     employee,
     spies;
@@ -21,8 +19,7 @@ describe('Employees', function() {
         'app.employees.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
     }));
@@ -48,10 +45,7 @@ describe('Employees', function() {
     describe('EmployeeCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
-        controller = $controller("EmployeeCtrl", {
-          $scope: $scope
-        });
+        controller = $controller("EmployeeCtrl");
         
         // TODO : using mock httpBackend, set up a response for calls to get a list of employees
 
