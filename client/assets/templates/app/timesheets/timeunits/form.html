@@ -2,15 +2,14 @@
   <div class="row">
     <div class="col-xs-12">
       <form class="form-horizontal" name="timeunitForm">
-
         <div class="form-group">
           <div tsz-field-wrap input-id="timeunit-project" label="Project">
             <select ui-select2="projectSelect"
               name="timeunit-project"
-              ng-model="timeunit.project" 
+              ng-model="timeunitFormCtrl.timeunit.project"
               data-placeholder="Select Project..." required>
               <option value=""></option>
-              <option ng-repeat="project in projects" value="{{project.name}}">{{project.name}}</option>
+              <option ng-repeat="project in timeunitCtrl.projects" value="{{project.name}}">{{project.name}}</option>
             </select>
           </div>
         </div>
@@ -20,11 +19,11 @@
             <div class="input-group">
               <input type="text" class="form-control" 
                 datepicker-popup="MM/dd/yyyy"
-                ng-model="timeunit.dateWorked"  
+                ng-model="timeunitFormCtrl.timeunit.dateWorked"  
                 show-weeks="false"
                 show-button-bar="false"
-                min="timesheet.beginDate"
-                max="timesheet.endDate"
+                min="timesheetDetailCtrl.timesheet.beginDate"
+                max="timesheetDetailCtrl.timesheet.endDate"
                 ng-required="true" 
                 close-text="Close" />
               <span class="input-group-btn">
@@ -40,7 +39,7 @@
           <div tsz-field-wrap input-id="timeunit-hoursWorked" label="Hours">
             <input type="number" class="form-control" 
               name="timeunit-hoursWorked" placeholder="Hours Worked"
-              ng-model="timeunit.hoursWorked">
+              ng-model="timeunitFormCtrl.timeunit.hoursWorked">
           </div>
         </div>
 
@@ -51,10 +50,10 @@
         <div class="row">
           <div class="col-sm-2 col-sm-offset-8">
             <button class="btn btn-primary btn-block" 
-              ng-click="save()">Save</button>
+              ng-click="timeunitFormCtrl.save()">Save</button>
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-danger btn-block" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-danger btn-block" ng-click="timeunitCtrl.cancel()">Cancel</button>
           </div>
         </div>
       </form>
