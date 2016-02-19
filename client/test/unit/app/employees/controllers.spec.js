@@ -1,12 +1,10 @@
 describe('Employees', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     employee,
     spies,
@@ -24,8 +22,7 @@ describe('Employees', function() {
       ));
 
     // TODO : inject the $state and $stateParams services and assign them to the spec's variables
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
     }));
@@ -56,9 +53,7 @@ describe('Employees', function() {
     describe('EmployeeCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
         controller = $controller("EmployeeCtrl", { 
-          $scope: $scope
 
           // TODO : inject spies.state and $stateParams into the test controller
         });
@@ -69,7 +64,7 @@ describe('Employees', function() {
       describe('during setup', function () {
         it('should be able to instantiate the controller and request a page of employees', function () { 
           expect(controller).to.be.ok; 
-          // $scope.requestEmployees is called upon controller creation
+          // controller.requestEmployees is called upon controller creation
           $httpBackend.expect('GET', '/users');
           $httpBackend.flush();
         });
@@ -79,9 +74,9 @@ describe('Employees', function() {
 
         it('should set the result to the employees', function () {
           $httpBackend.expect('GET', '/users');
-          $scope.requestEmployees();
+          controller.requestEmployees();
           $httpBackend.flush();
-          expect($scope.employees[0].username).to.equal("testUser");
+          expect(controller.employees[0].username).to.equal("testUser");
         }); 
 
       });
@@ -98,7 +93,7 @@ describe('Employees', function() {
         it('should send a remove request for the specified employee', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/' + employee._id).respond(200);
-          $scope.remove(employee);
+          controller.remove(employee);
           $httpBackend.flush();
         });
 
@@ -109,7 +104,7 @@ describe('Employees', function() {
           });
 
           it('should set the employee to deleted for the ui', function () {
-            $scope.remove(employee);
+            controller.remove(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.true;
           });
@@ -122,7 +117,7 @@ describe('Employees', function() {
           });
 
           it('should set deleted to false for the employee in the ui', function () {
-            $scope.remove(employee);
+            controller.remove(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.false;
           });
@@ -138,7 +133,7 @@ describe('Employees', function() {
         it('should send a restore request for the specified employee', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/' + employee._id).respond(200);
-          $scope.restore(employee);
+          controller.restore(employee);
           $httpBackend.flush();
         });
 
@@ -149,7 +144,7 @@ describe('Employees', function() {
           });
 
           it('should set the employee to not deleted for the ui', function () {
-            $scope.restore(employee);
+            controller.restore(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.false;
           });
@@ -162,7 +157,7 @@ describe('Employees', function() {
           });
 
           it('should set deleted to true for the employee in the ui', function () {
-            $scope.restore(employee);
+            controller.restore(employee);
             $httpBackend.flush();
             expect(employee.deleted).to.be.true;
           });
@@ -182,9 +177,7 @@ describe('Employees', function() {
       beforeEach(function() {
         // TODO : set the saveText on the data of the current state to 'update'
 
-        $scope = $rootScope.$new();
         controller = $controller("EmployeeDetailCtrl", {
-          $scope: $scope,
           employee: new api.employees(employee)
 
           // TODO : inject the spies.state and $stateProvider into the test controller
@@ -227,10 +220,7 @@ describe('Employees', function() {
       beforeEach(function() {
         // TODO : set the saveText on the data of the current state to 'create'
 
-        $scope = $rootScope.$new();
         controller = $controller("EmployeeCreateCtrl", {
-          $scope: $scope
-
           // TODO : inject the spies.state and $stateParams into the test controller
 
         });

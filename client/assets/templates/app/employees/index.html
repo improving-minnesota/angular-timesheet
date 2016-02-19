@@ -21,7 +21,7 @@
           <tbody>
 
             <!-- TODO : set the row to call showDetail(employee) when clicked -->
-            <tr ng-repeat="employee in employees" 
+            <tr ng-repeat="employee in employeeCtrl.employees" 
               class="fadeable-row"
               ng-class="{faded: employee.deleted}">
 
@@ -33,10 +33,10 @@
               <td>
                 <div ng-switch="employee.deleted">
                   <div ng-switch-when="true">
-                    <button class="btn btn-sm btn-default" ng-click="restore(employee); $event.stopPropagation();">Restore</button>
+                    <button class="btn btn-sm btn-default" ng-click="employeeCtrl.restore(employee); $event.stopPropagation();">Restore</button>
                   </div>
                   <div ng-switch-default>
-                    <button class="btn btn-sm btn-danger" ng-click="remove(employee); $event.stopPropagation();">Delete</button>
+                    <button class="btn btn-sm btn-danger" ng-click="employeeCtrl.remove(employee); $event.stopPropagation();">Delete</button>
                   </div>
                 </div>
               </td>
