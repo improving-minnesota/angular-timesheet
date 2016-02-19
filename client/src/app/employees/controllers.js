@@ -1,17 +1,19 @@
 angular.module('app.employees.controllers', [])
   
   .controller('EmployeeCtrl', 
-    function (data, $scope, $state, $stateParams, notifications) {
 
-      $scope.requestEmployees = function requestEmployees (page) {
+    function (data, $state, $stateParams, notifications) {
+      var vm = this;
+
+      vm.requestEmployees = function requestEmployees (page) {
 
         data.list('employees')
           .then(function (employees) {
-            $scope.employees = employees;
+            vm.employees = employees;
           });
       };
 
-      $scope.showDetail = function showDetail (employee) {
+      vm.showDetail = function showDetail (employee) {
         if (employee.deleted) {
           notifications.error('You cannot edit a deleted employee.');
           return;
@@ -19,11 +21,11 @@ angular.module('app.employees.controllers', [])
         $state.go('app.employees.detail', employee);
       };  
 
-      $scope.createNew = function createNew () {
+      vm.createNew = function createNew () {
         $state.go('app.employees.create', $stateParams);
       };
 
-      $scope.remove = function remove (employee) {
+      vm.remove = function remove (employee) {
 
         data.remove('employees', employee) 
           .then(function () {
@@ -35,7 +37,7 @@ angular.module('app.employees.controllers', [])
           });
       };
 
-      $scope.restore = function restore (employee) {
+      vm.restore = function restore (employee) {
        
        data.restore('employees', employee)
           .then(function (restored) {
@@ -47,24 +49,27 @@ angular.module('app.employees.controllers', [])
           });
       };
 
-      $scope.cancel = function cancel () {
+      vm.cancel = function cancel () {
         $state.go('app.employees', {}, {reload: true});
       };
 
-      $scope.requestEmployees(1);
+      vm.requestEmployees(1);
     }
   )
 
   .controller('EmployeeDetailCtrl', 
-    function ($scope, $state, $stateParams, notifications, employee) {
-      $scope.saveText = $state.current.data.saveText;
-      $scope.employee = employee;
+    function ($state, $stateParams, notifications, employee) {
+      var vm = this;
 
-      $scope.save = function save () {
-        $scope.employee.$update()
+      vm.saveText = $state.current.data.saveText;
+      vm.employee = employee;
+
+      vm.save = function save () {
+        vm.employee.$update()
           .then(function (updated) {
-            $scope.timesheet = updated;
-            notifications.success('Updated employee: ' + employee.username);
+            vm.timesheet = updated;
+            $state.go('app.employees', {}, {reload: true});
+            notifications.success('Updated employee: ' + employee.username);            
           })
           .catch(function (x) {
             notifications.error('There was an error updating the employee.');
@@ -74,15 +79,17 @@ angular.module('app.employees.controllers', [])
   )
 
   .controller('EmployeeCreateCtrl', 
-    function ($scope, $state, $stateParams, data, notifications) {
-      $scope.saveText = $state.current.data.saveText;
-      $scope.employee = {admin: false};
+    function ($state, $stateParams, data, notifications) {
+      var vm = this;
 
-      $scope.save = function save () {
-        data.create('employees', $scope.employee)
+      vm.saveText = $state.current.data.saveText;
+      vm.employee = {admin: false};
+
+      vm.save = function save () {
+        data.create('employees', vm.employee)
           .then(function (created) {
             notifications.success('Employee : ' + created.username + ', created.');
-            $state.go('app.employees.detail', {_id: created._id});
+            $state.go('app.employees', {}, {reload: true});
           })
           .catch(function (x) {
             notifications.error('There was an error creating employee.');

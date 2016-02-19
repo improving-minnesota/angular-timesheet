@@ -1,17 +1,18 @@
 angular.module('app.projects.controllers', [])
     
   .controller('ProjectCtrl', 
-    function (data, $scope, $state, $stateParams, notifications) {
+    function (data, $state, $stateParams, notifications) {
+      var vm = this;
 
-      $scope.requestProjects = function requestProjects (page) {
+      vm.requestProjects = function requestProjects (page) {
         
         data.list('projects')
           .then(function (projects) {
-            $scope.projects = projects;
+            vm.projects = projects;
           });
       };
 
-      $scope.showDetail = function showDetail (project) {
+      vm.showDetail = function showDetail (project) {
         if (project.deleted) {
           notifications.error('You cannot edit a deleted project.');
           return;
@@ -19,11 +20,11 @@ angular.module('app.projects.controllers', [])
         $state.go('app.projects.detail', project);
       };
 
-      $scope.createNew = function createNew () {
+      vm.createNew = function createNew () {
         $state.go('app.projects.create', $stateParams);
       };
 
-      $scope.remove = function remove (project) {
+      vm.remove = function remove (project) {
         data.remove('projects', project)
           .then(function (removed) {
             notifications.success('Project : ' + project.name + ', was deleted.');
@@ -34,7 +35,7 @@ angular.module('app.projects.controllers', [])
           });
       };
 
-      $scope.restore = function restore (project) { 
+      vm.restore = function restore (project) { 
 
         data.restore('projects', project) 
           .then(function (restored) {
@@ -46,23 +47,26 @@ angular.module('app.projects.controllers', [])
           });
       };
 
-      $scope.cancel = function cancel () {
+      vm.cancel = function cancel () {
         $state.go('app.projects', {}, {reload: true});
       };
 
-      $scope.requestProjects(1);
+      vm.requestProjects(1);
     }
   )
 
   .controller('ProjectDetailCtrl', 
-    function ($scope, $state, $stateParams, notifications, project) {
-      $scope.saveText = $state.current.data.saveText;
-      $scope.project = project;
+    function ($state, $stateParams, notifications, project) {
+      var vm = this;
 
-      $scope.save = function save () {
-        $scope.project.$update()
+      vm.saveText = $state.current.data.saveText;
+      vm.project = project;
+
+      vm.save = function save () {
+        vm.project.$update()
           .then(function (updated) {
-            $scope.project = updated;
+            vm.project = updated;
+            $state.go('app.projects', {}, {reload: true});
             notifications.success('Updated project: ' + updated.name);
           })
           .catch(function (x) {
@@ -73,14 +77,16 @@ angular.module('app.projects.controllers', [])
   )
 
   .controller('ProjectCreateCtrl', 
-    function ($scope, $state, $stateParams, data, notifications) {
-      $scope.saveText = $state.current.data.saveText;
-      $scope.project = {};
+    function ($state, $stateParams, data, notifications) {
+      var vm = this;
 
-      $scope.save = function save () {
-        data.create('projects', $scope.project) 
+      vm.saveText = $state.current.data.saveText;
+      vm.project = {};
+
+      vm.save = function save () {
+        data.create('projects', vm.project)
           .then(function (created) {
-            $state.go('app.projects.detail', {_id: created._id});
+            $state.go('app.projects', {}, {reload: true});
             notifications.success('Project : ' + created.name + ', created.');
           })
           .catch(function (x) {

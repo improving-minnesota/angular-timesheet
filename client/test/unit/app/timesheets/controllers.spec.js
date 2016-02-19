@@ -1,12 +1,10 @@
 describe('Timesheets', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     timesheet,
     timeunits,
@@ -28,8 +26,7 @@ describe('Timesheets', function() {
         'app.timesheets.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_, _$state_, _$stateParams_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_, _$state_, _$stateParams_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
       $state = _$state_;
@@ -74,9 +71,7 @@ describe('Timesheets', function() {
     describe('TimesheetCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
         controller = $controller("TimesheetCtrl", { 
-          $scope: $scope,
           $state: spies.state,
           $stateParams: $stateParams 
         });
@@ -87,7 +82,7 @@ describe('Timesheets', function() {
       describe('during setup', function () {
         it('should be able to instantiate the controller and request a page of timesheets', function () { 
           expect(controller).to.be.ok; 
-          // $scope.requestTimesheets is called upon controller creation
+          // controller.requestTimesheets is called upon controller creation
           $httpBackend.expect('GET', '/users/1234567890/timesheets');
           $httpBackend.flush();
         });
@@ -96,9 +91,9 @@ describe('Timesheets', function() {
       describe('requesting timesheets', function () {
         it('should set the result to the timesheets', function () {
           $httpBackend.expect('GET', '/users/1234567890/timesheets');
-          $scope.requestTimesheets();
+          controller.requestTimesheets();
           $httpBackend.flush();
-          expect($scope.timesheets[0].name).to.equal("testTimesheet");
+          expect(controller.timesheets[0].name).to.equal("testTimesheet");
         });
       });
 
@@ -106,12 +101,12 @@ describe('Timesheets', function() {
         it('should notify the user if the timesheet is deleted', function () {
           timesheet.deleted = true;
           $httpBackend.flush();
-          $scope.showDetail(timesheet);
+          controller.showDetail(timesheet);
           expect(spies.error).to.have.been.calledWith('You cannot edit a deleted timesheet.');
         });
         it('should transition to the timesheet detail state', function () {
           $httpBackend.flush();
-          $scope.showDetail(timesheet);
+          controller.showDetail(timesheet);
           expect(spies.state.go).to.have.been.calledWith('app.timesheets.detail', timesheet);
         });
       });
@@ -119,7 +114,7 @@ describe('Timesheets', function() {
       describe('creating a new timesheet', function () {
         it('should transition to the create timesheet state', function () {
           $httpBackend.flush();
-          $scope.createNew();
+          controller.createNew();
           expect(spies.state.go).to.have.been.calledWith('app.timesheets.create');
         });
       });
@@ -129,7 +124,7 @@ describe('Timesheets', function() {
         it('should send a remove request for the specified timesheet', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/1234567890/timesheets/' + timesheet._id).respond(200);
-          $scope.remove(timesheet);
+          controller.remove(timesheet);
           $httpBackend.flush();
         });
 
@@ -140,12 +135,12 @@ describe('Timesheets', function() {
           });
 
           it('should set the timesheet to deleted for the ui', function () {
-            $scope.remove(timesheet);
+            controller.remove(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.true;
           });
           it('should notify the user of the deletion', function () {
-            $scope.remove(timesheet);
+            controller.remove(timesheet);
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -159,12 +154,12 @@ describe('Timesheets', function() {
           });
 
           it('should set deleted to false for the timesheet in the ui', function () {
-            $scope.remove(timesheet);
+            controller.remove(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.false;
           });
           it('should notify the user of the error', function () {
-            $scope.remove(timesheet);
+            controller.remove(timesheet);
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -181,7 +176,7 @@ describe('Timesheets', function() {
         it('should send a restore request for the specified timesheet', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/users/1234567890/timesheets/' + timesheet._id).respond(200);
-          $scope.restore(timesheet);
+          controller.restore(timesheet);
           $httpBackend.flush();
         });
 
@@ -192,12 +187,12 @@ describe('Timesheets', function() {
           });
 
           it('should set the timesheet to not deleted for the ui', function () {
-            $scope.restore(timesheet);
+            controller.restore(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.false;
           });
           it('should notify the user of the deletion', function () {
-            $scope.restore(timesheet);
+            controller.restore(timesheet);
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -211,12 +206,12 @@ describe('Timesheets', function() {
           });
 
           it('should set deleted to true for the timesheet in the ui', function () {
-            $scope.restore(timesheet);
+            controller.restore(timesheet);
             $httpBackend.flush();
             expect(timesheet.deleted).to.be.true;
           });
           it('should notify the user of the error', function () {
-            $scope.restore(timesheet);
+            controller.restore(timesheet);
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -231,9 +226,7 @@ describe('Timesheets', function() {
       
       beforeEach(function() {
 
-        $scope = $rootScope.$new();
         controller = $controller("TimesheetDetailCtrl", {
-          $scope: $scope,
           timesheet: new api.timesheets(timesheet),
           timeunits: timeunits,
           $state: spies.state,
@@ -249,35 +242,35 @@ describe('Timesheets', function() {
         });
 
         it('should set the timesheet on scope to the resolved timesheet', function () {
-          expect($scope.timesheet._id).to.equal(timesheet._id);
-          expect($scope.timesheet.name).to.equal(timesheet.name);
+          expect(controller.timesheet._id).to.equal(timesheet._id);
+          expect(controller.timesheet.name).to.equal(timesheet.name);
         });
       });
 
       describe('edit', function () {
         it('should transition to the edit state', function () {
-          $scope.edit(timesheet);
+          controller.edit(timesheet);
           expect(spies.state.go).to.have.been.calledWith('app.timesheets.detail.edit', $stateParams);
         }); 
       });
 
       describe('cancel', function () {
         it('should return back to the timesheet list', function () {
-          $scope.cancel();
+          controller.cancel();
           expect(spies.state.go).to.have.been.calledWith('app.timesheets');
         });
       });
 
       describe('logTime', function () {
         it('should transition to the create timeunits state', function () {
-          $scope.logTime();
+          controller.logTime();
           expect(spies.state.go).to.have.been.calledWith('app.timesheets.detail.timeunits.create', $stateParams);
         });
       });
 
       describe('showTimeunitDetail', function () {
         it('should set the timeunit_id on state params and transistion to the edit timeunits state', function () {
-          $scope.showTimeunitDetail({_id: 'abc'});
+          controller.showTimeunitDetail({_id: 'abc'});
           expect($stateParams.timeunit_id).to.equal('abc');
           expect(spies.state.go).to.have.been.calledWith('app.timesheets.detail.timeunits.edit');
         });
@@ -286,7 +279,7 @@ describe('Timesheets', function() {
       describe('removeTimeunit', function () {
         it('should send a remove request for the specified timeunit', function () {
           $httpBackend.expect('PUT', '/users/1234567890/timesheets/asdfghjklqwerty/timeunits/aaaaaaaaaa').respond(200);
-          $scope.removeTimeunit(timeunit);
+          controller.removeTimeunit(timeunit);
           $httpBackend.flush();
         });
 
@@ -296,12 +289,12 @@ describe('Timesheets', function() {
           });
 
           it('should set the timeunit to deleted for the ui', function () {
-            $scope.removeTimeunit(timeunit);
+            controller.removeTimeunit(timeunit);
             $httpBackend.flush();
             expect(timeunit.deleted).to.be.true;
           });
           it('should notify the user of the deletion', function () {
-            $scope.removeTimeunit(timeunit);
+            controller.removeTimeunit(timeunit);
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -314,12 +307,12 @@ describe('Timesheets', function() {
           });
 
           it('should set deleted to false for the timeunit in the ui', function () {
-            $scope.removeTimeunit(timeunit);
+            controller.removeTimeunit(timeunit);
             $httpBackend.flush();
             expect(timeunit.deleted).to.be.false;
           });
           it('should notify the user of the error', function () {
-            $scope.removeTimeunit(timeunit);
+            controller.removeTimeunit(timeunit);
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -334,7 +327,7 @@ describe('Timesheets', function() {
 
         it('should send a restore request for the specified timeunit', function () {
           $httpBackend.expect('PUT', '/users/1234567890/timesheets/asdfghjklqwerty/timeunits/aaaaaaaaaa').respond(200);
-          $scope.restoreTimeunit(timeunit);
+          controller.restoreTimeunit(timeunit);
           $httpBackend.flush();
         });
 
@@ -344,12 +337,12 @@ describe('Timesheets', function() {
           });
 
           it('should set the timeunit to not deleted for the ui', function () {
-            $scope.restoreTimeunit(timeunit);
+            controller.restoreTimeunit(timeunit);
             $httpBackend.flush();
             expect(timeunit.deleted).to.be.false;
           });
           it('should notify the user of the deletion', function () {
-            $scope.restoreTimeunit(timeunit);
+            controller.restoreTimeunit(timeunit);
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -362,12 +355,12 @@ describe('Timesheets', function() {
           });
 
           it('should set deleted to true for the timeunit in the ui', function () {
-            $scope.restoreTimeunit(timeunit);
+            controller.restoreTimeunit(timeunit);
             $httpBackend.flush();
             expect(timeunit.deleted).to.be.true;
           });
           it('should notify the user of the error', function () {
-            $scope.restoreTimeunit(timeunit);
+            controller.restoreTimeunit(timeunit);
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -380,9 +373,7 @@ describe('Timesheets', function() {
       beforeEach(function() {
         spies.state.current = {data: {saveText: 'update'}};
 
-        $scope = $rootScope.$new();
         controller = $controller("TimesheetEditCtrl", {
-          $scope: $scope,
           timesheet: new api.timesheets(timesheet),
           $state: spies.state
         });
@@ -394,12 +385,12 @@ describe('Timesheets', function() {
         });
 
         it('should set saveText to the current state saveText', function () {
-          expect($scope.saveText).to.equal('update');
+          expect(controller.saveText).to.equal('update');
         });
 
         it('should set the timesheet on scope to the resolved timesheet', function () {
-          expect($scope.timesheet._id).to.equal(timesheet._id);
-          expect($scope.timesheet.name).to.equal(timesheet.name);
+          expect(controller.timesheet._id).to.equal(timesheet._id);
+          expect(controller.timesheet.name).to.equal(timesheet.name);
         });
       });
 
@@ -418,13 +409,13 @@ describe('Timesheets', function() {
           });
 
           it('should set the timesheet on scope to be the updated timesheet', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
-            expect($scope.timesheet.name).to.equal(updatedTimesheet.name);
+            expect(controller.timesheet.name).to.equal(updatedTimesheet.name);
           });
 
           it('should notify the user of the successful update', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -434,7 +425,7 @@ describe('Timesheets', function() {
         describe('in error', function () {
           it('should notify the user of the error', function () {
             $httpBackend.when('PUT', '/users/1234567890/timesheets/' + timesheet._id).respond(500);
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -445,7 +436,7 @@ describe('Timesheets', function() {
 
       describe('cancel', function () {
         it('should return back to the timesheet detail', function () {
-          $scope.cancel();
+          controller.cancel();
           expect(spies.state.go).to.have.been.calledWith('app.timesheets.detail');
         });
       });
@@ -456,9 +447,7 @@ describe('Timesheets', function() {
       beforeEach(function() {
         spies.state.current = {data: {saveText: 'create'}};
 
-        $scope = $rootScope.$new();
         controller = $controller("TimesheetCreateCtrl", {
-          $scope: $scope,
           $state: spies.state,
           $stateParams: $stateParams
         });
@@ -470,11 +459,11 @@ describe('Timesheets', function() {
         });
 
         it('should set saveText to the current state saveText', function () {
-          expect($scope.saveText).to.equal('create');
+          expect(controller.saveText).to.equal('create');
         });
         
         it('should set the timesheet on scope to an empty object', function () {
-          expect($scope.timesheet).to.be.empty;
+          expect(controller.timesheet).to.be.empty;
         });
       }); 
 
@@ -491,13 +480,13 @@ describe('Timesheets', function() {
             });
 
           it('should transition to the detail page of the created timesheet', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.state.go).to.have.been.calledWith('app.timesheets.detail', {user_id: $stateParams.user_id, _id: timesheet._id});
           });
 
           it('should notify the user of the successful create', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -507,7 +496,7 @@ describe('Timesheets', function() {
         describe('in error', function () {
           it('should notify the user of the error', function () {
             $httpBackend.when('POST', '/users/1234567890/timesheets').respond(500);
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -517,7 +506,7 @@ describe('Timesheets', function() {
 
       describe('cancel', function () {
         it('should return back to the timesheet list', function () {
-          $scope.cancel();
+          controller.cancel();
           expect(spies.state.go).to.have.been.calledWith('app.timesheets');
         });
       });
