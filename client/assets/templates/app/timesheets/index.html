@@ -2,7 +2,7 @@
   <div ng-show="$state.is('app.timesheets')">
     <div class="row tsz-form-row">
       <div class="col-sm-2 pull-right">
-        <button class="btn btn-primary btn-block" type="button" ng-click="createNew()">
+        <button class="btn btn-primary btn-block" type="button" ng-click="timesheetCtrl.createNew()">
           <i class="icon-plus"></i>
           New Timesheet
         </button>
@@ -21,10 +21,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="timesheet in timesheets" 
+            <tr ng-repeat="timesheet in timesheetCtrl.timesheets" 
               class="fadeable-row"
               ng-class="{faded: timesheet.deleted}"
-              ng-click="showDetail(timesheet)">
+              ng-click="timesheetCtrl.showDetail(timesheet)">
 
               <td>{{timesheet.beginDate}}</td>
               <td>{{timesheet.endDate}}</td>
@@ -33,10 +33,10 @@
               <td>
                 <div ng-switch="timesheet.deleted">
                   <div ng-switch-when="true">
-                    <button class="btn btn-sm btn-default" ng-click="restore(timesheet); $event.stopPropagation();">Restore</button>
+                    <button class="btn btn-sm btn-default" ng-click="timesheetCtrl.restore(timesheet); $event.stopPropagation();">Restore</button>
                   </div>
                   <div ng-switch-default>
-                      <button class="btn btn-sm btn-danger" ng-click="remove(timesheet); $event.stopPropagation();">Delete</button>
+                      <button class="btn btn-sm btn-danger" ng-click="timesheetCtrl.remove(timesheet); $event.stopPropagation();">Delete</button>
                   </div>
                 </div>
               </td>
