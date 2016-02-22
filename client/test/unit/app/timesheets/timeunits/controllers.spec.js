@@ -1,12 +1,10 @@
 describe('Timeunits', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     timeunit,
     timesheet,
@@ -26,8 +24,7 @@ describe('Timeunits', function() {
         'app.timesheets.timeunits.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_, _$state_, _$stateParams_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_, _$state_, _$stateParams_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
       $state = _$state_;
@@ -68,10 +65,8 @@ describe('Timeunits', function() {
 
     describe('TimeunitCtrl', function() {
 
-      beforeEach(inject(function($rootScope, $controller) {
-        $scope = $rootScope.$new();
+      beforeEach(inject(function($controller) {
         controller = $controller("TimeunitCtrl", { 
-          $scope: $scope,
           projects: projects,
           $stateParams: $stateParams
         });
@@ -82,13 +77,13 @@ describe('Timeunits', function() {
           expect(controller).to.be.ok;
         });
         it('should set the resolved list of projects on scope', function () {
-          expect($scope.projects).to.equal(projects);
+          expect(controller.projects).to.equal(projects);
         });
       }); 
 
       describe('cancel', function () {
         it('should return back to the timesheet detail', function () {
-          $scope.cancel();
+          controller.cancel();
           expect(spies.state.go).to.have.been.calledWith('app.timesheets.detail');
         });
       });
@@ -96,10 +91,8 @@ describe('Timeunits', function() {
 
     describe('TimeunitEditCtrl', function() {
 
-      beforeEach(inject(function($rootScope, $controller) {
-        $scope  = $rootScope.$new();
+      beforeEach(inject(function($controller) {
         controller = $controller("TimeunitEditCtrl", {
-          $scope: $scope,
           $state: spies.state,
           $stateParams: $stateParams,
           timeunit: new api.timeunits(timeunit)
@@ -111,7 +104,7 @@ describe('Timeunits', function() {
           expect(controller).to.be.ok;
         });
         it('should attach the resolved timeunit onto scope', function () {
-          expect($scope.timeunit._id).to.equal(timeunit._id);
+          expect(controller.timeunit._id).to.equal(timeunit._id);
         });
       });
 
@@ -130,9 +123,9 @@ describe('Timeunits', function() {
           });
 
           it('should set the timeunit on scope to be the updated timeunit', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
-            expect($scope.timeunit.name).to.equal(updatedTimeunit.name);
+            expect(controller.timeunit.name).to.equal(updatedTimeunit.name);
           });
         });
 
@@ -141,12 +134,10 @@ describe('Timeunits', function() {
 
     describe('TimeunitCreateCtrl', function() {
 
-      beforeEach(inject(function($rootScope, $controller) {
-        $scope  = $rootScope.$new();
-        $scope.timesheet = {"_id": "asdfghjklqwerty", beginDate: '2014-05-12'};
+      beforeEach(inject(function($controller) {
         controller = $controller("TimeunitCreateCtrl", {
-          $scope: $scope,
-          $stateParams: $stateParams 
+          $stateParams: $stateParams,
+          timesheet: timesheet
         });
       }));
 
@@ -155,8 +146,8 @@ describe('Timeunits', function() {
           expect(controller).to.be.ok;
         });
         it('should initialize a new timeunit with user and timesheet ids', function () {
-          expect($scope.timeunit.user_id).to.equal($stateParams.user_id);
-          expect($scope.timeunit.timesheet_id).to.equal($stateParams._id);
+          expect(controller.timeunit.user_id).to.equal($stateParams.user_id);
+          expect(controller.timeunit.timesheet_id).to.equal($stateParams._id);
         });
       }); 
 
@@ -175,9 +166,9 @@ describe('Timeunits', function() {
           });
 
           it('should set the timeunit on scope to be the updated timeunit', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
-            expect($scope.timeunit.name).to.equal(updatedTimeunit.name);
+            expect(controller.timeunit.name).to.equal(updatedTimeunit.name);
           });
         });
 

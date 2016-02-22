@@ -9,6 +9,7 @@ angular.module('app.timesheets', [
       .state('app.timesheets', {
         url: '/users/:user_id/timesheets',
         controller: 'TimesheetCtrl',
+        controllerAs: 'timesheetCtrl',
         templateUrl: 'assets/templates/app/timesheets/index.html',
         data: {
           section: 'Timesheets'
@@ -18,6 +19,7 @@ angular.module('app.timesheets', [
       .state('app.timesheets.detail', {
         url: '/detail/:_id',
         controller: 'TimesheetDetailCtrl',
+        controllerAs: 'timesheetDetailCtrl',
         templateUrl: 'assets/templates/app/timesheets/detail.html',
         data: {
           section: 'Timesheet Details'
@@ -43,6 +45,7 @@ angular.module('app.timesheets', [
       .state('app.timesheets.detail.edit', {
         url: '/edit',
         controller: 'TimesheetEditCtrl',
+        controllerAs: 'timesheetFormCtrl',
         templateUrl: 'assets/templates/app/timesheets/form.html',
         data: {
           section: 'Edit Timesheet',
@@ -53,6 +56,7 @@ angular.module('app.timesheets', [
       .state('app.timesheets.create', {
         url: '/create',
         controller: 'TimesheetCreateCtrl',
+        controllerAs: 'timesheetFormCtrl',
         templateUrl: 'assets/templates/app/timesheets/form.html',
         data: {
           section: 'Create Timesheet',

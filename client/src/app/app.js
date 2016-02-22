@@ -22,10 +22,12 @@ angular.module('app', [
         views : {
           'navbar' : {
             controller: 'NavCtrl',
+            controllerAs: 'navCtrl',
             templateUrl: 'assets/templates/app/navbar.html'
           },
           'content' : {
             controller: 'AppCtrl',
+            controllerAs: 'appCtrl',
             templateUrl: 'assets/templates/app/index.html'
           }
         }

@@ -8,7 +8,8 @@ angular.module('app.security.controllers', [
 .controller('LoginCtrl', 
 
   // TODO : inject the authorization service
-  function ($scope, $location, $stateParams, authentication, securityContext) {
+  function ($location, $stateParams, authentication, securityContext) {
+    var vm = this;
 
     // Request the current user, this will wait until the current user
     // promise is resolved.
@@ -25,41 +26,41 @@ angular.module('app.security.controllers', [
       });
 
     // The model for this form 
-    $scope.user = {};
+    vm.user = {};
 
     // Any error message from failing to login
-    $scope.authError = null;
+    vm.authError = null;
 
     // The reason that we are being asked to login - for instance because we tried to access something to which we are not authorized
     // We could do something diffent for each reason here but to keep it simple...
-    $scope.authReason = null;
+    vm.authReason = null;
     if ( authentication.getLoginReason() ) {
-      $scope.authReason = ( securityContext.authenticated ) ?
+      vm.authReason = ( securityContext.authenticated ) ?
         "You are not authorized to perform this action." : "";
     }
 
     // Attempt to authenticate the user specified in the form's model
-    $scope.login = function () {
+    vm.login = function () {
 
       // Clear any previous security errors
-      $scope.authError = null;
+      vm.authError = null;
 
       // Try to login
-      authentication.login($scope.user.username, $scope.user.password)
+      authentication.login(vm.user.username, vm.user.password)
         .then(function () {
           if ( !securityContext.authenticated ) {
             // If we get here then the login failed due to bad credentials
-            $scope.authError = "Invalid username and password combination.";
+            vm.authError = "Invalid username and password combination.";
           }
         })
         .catch(function (x) {
           // If we get here then there was a problem with the login request to the server
-          $scope.authError = "Invalid username and password combination.";
+          vm.authError = "Invalid username and password combination.";
         });
     };
 
-    $scope.clearForm = function () {
-      $scope.user = {};
+    vm.clearForm = function () {
+      vm.user = {};
     };
   }
 );
