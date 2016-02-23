@@ -14,7 +14,7 @@ function ProjectsIndexPage() {
     this.newProjectButton.click();
   };
 
-  this.firstProject = element(by.repeater('project in pageConfig.data').row(0));
+  this.firstProject = element(by.repeater('project in projectCtrl.pageConfig.data').row(0));
   this.clickFirstProject = function () {
     this.firstProject.click();
   };
