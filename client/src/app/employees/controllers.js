@@ -2,21 +2,22 @@ angular.module('app.employees.controllers', [])
   
   .controller('EmployeeCtrl', 
     // TODO : inject $state and $stateParams
-    function (data, $scope) {
+    function (data) {
+      var vm = this;
 
-      $scope.requestEmployees = function requestEmployees (page) {
+      vm.requestEmployees = function requestEmployees (page) {
 
         data.list('employees')
           .then(function (employees) {
-            $scope.employees = employees;
+            vm.employees = employees;
           });
       };
 
-      // TODO : implement a function on scope to show the detail of an employee
-      // TODO : implement a function on scope to navigate to the create employee state
-      // TODO : implement a function on scope to handle cancel for child states
+      // TODO : implement a function on controller to show the detail of an employee
+      // TODO : implement a function on controller to navigate to the create employee state
+      // TODO : implement a function on controller to handle cancel for child states
 
-      $scope.remove = function remove (employee) {
+      vm.remove = function remove (employee) {
 
         data.remove('employees', employee) 
           .then(function () {
@@ -24,11 +25,11 @@ angular.module('app.employees.controllers', [])
           })
           .catch(function (x) {
             employee.deleted = false;
-            console.log('error : ' + x);
+            console.log('error : ' + JSON.stringify(x));
           });
       };
 
-      $scope.restore = function restore (employee) {
+      vm.restore = function restore (employee) {
        
        data.restore('employees', employee)
           .then(function (restored) {
@@ -36,32 +37,34 @@ angular.module('app.employees.controllers', [])
           })
           .catch(function (x) {
             employee.deleted = true;
-            console.log('error : ' + x);
+            console.log('error : ' + JSON.stringify(x));
           });
       };
 
-      $scope.requestEmployees(1);
+      vm.requestEmployees(1);
     }
   )
 
   .controller('EmployeeDetailCtrl', 
     // TODO : inject $state and $stateParams
-    function ($scope, employee) {
-      // TODO : set saveText on scope to the saveText assigned to the data of the current state
+    function (employee) {
+      var vm = this;
+      // TODO : set saveText on controller to the saveText assigned to the data of the current state
 
-      $scope.employee = employee;
+      vm.employee = employee;
 
-      // TODO : implement a function on scope to update the employee
+      // TODO : implement a function on controller to update the employee
     }
   )
 
   .controller('EmployeeCreateCtrl', 
     // TODO : inject $state and $stateParams
-    function ($scope, data) {
-      // TODO : set saveText on scope to the saveText assigned to the data of the current state
+    function (data) {
+      var vm = this;
+      // TODO : set saveText on controller to the saveText assigned to the data of the current state
 
-      $scope.employee = {admin: false};
+      vm.employee = {admin: false};
 
-      // TODO : implement a function on scope to update the employee and redirect to the detail state
+      // TODO : implement a function on controller to update the employee and redirect to the detail state
     }
   );

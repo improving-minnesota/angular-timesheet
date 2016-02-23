@@ -2,23 +2,24 @@ angular.module('app.timesheets.controllers', [])
 
   .controller('TimesheetCtrl', 
     // TODO : inject $state and $stateParams services
-    function (data, $scope) {
+    function (data) {
+      var vm = this;
 
-      $scope.requestTimesheets = function requestTimesheets (page) {
+      vm.requestTimesheets = function requestTimesheets (page) {
 
         // TODO : assign the query's user_id to $stateParams.user_id
         var query = {};
 
         data.list('timesheets', query)
           .then(function (timesheets) {
-            $scope.timesheets = timesheets;
+            vm.timesheets = timesheets;
           });
       };
 
-      // TODO : implement a function on scope to show the timesheet details
-      // TODO : implement a function on scope to navigate to the create timesheet state
+      // TODO : implement a function on controller to show the timesheet details
+      // TODO : implement a function on controller to navigate to the create timesheet state
 
-      $scope.remove = function remove (timesheet) {
+      vm.remove = function remove (timesheet) {
 
         data.remove('timesheets', timesheet)
           .then(function () {
@@ -26,11 +27,11 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {  
             timesheet.deleted = false;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
 
-      $scope.restore = function restore (timesheet) {
+      vm.restore = function restore (timesheet) {
         
         data.restore('timesheets', timesheet)
           .then(function (restored) {
@@ -38,26 +39,28 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {
             timesheet.deleted = true;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
 
-      $scope.requestTimesheets(1);
+      vm.requestTimesheets(1);
     }
   )
 
   .controller('TimesheetDetailCtrl', 
     // TODO : inject $state and $stateParams services
-    function ($scope, data, timesheet, timeunits) {
-      $scope.timesheet = timesheet;
-      $scope.timeunits = timeunits;
+    function (data, timesheet, timeunits) {
+      var vm = this;
 
-      // TODO : implement a function on scope to navigate to the edit timesheet state
-      // TODO : implement a function on scope to handle cancels
-      // TODO : implement a function on scope to navigate to the log time state
-      // TODO : implement a function on scope to navigate to a timeunit's detail state
+      vm.timesheet = timesheet;
+      vm.timeunits = timeunits;
 
-      $scope.removeTimeunit = function removeTimeunit (timeunit) {
+      // TODO : implement a function on controller to navigate to the edit timesheet state
+      // TODO : implement a function on controller to handle cancels
+      // TODO : implement a function on controller to navigate to the log time state
+      // TODO : implement a function on controller to navigate to a timeunit's detail state
+
+      vm.removeTimeunit = function removeTimeunit (timeunit) {
         timeunit.user_id = timesheet.user_id;
 
         data.remove('timeunits', timeunit) 
@@ -66,13 +69,13 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {
             timeunit.deleted = false;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
 
           console.log("remove");
       };
 
-      $scope.restoreTimeunit = function restoreTimeunit (timeunit) {
+      vm.restoreTimeunit = function restoreTimeunit (timeunit) {
         timeunit.user_id = timesheet.user_id;
 
         data.restore('timeunits', timeunit)
@@ -81,7 +84,7 @@ angular.module('app.timesheets.controllers', [])
           })
           .catch(function (x) {
             timeunit.deleted = true;
-            console.log('error ' + x);
+            console.log('error ' + JSON.stringify(x));
           });
       };
     } 
@@ -89,24 +92,26 @@ angular.module('app.timesheets.controllers', [])
 
   .controller('TimesheetEditCtrl', 
     // TODO : inject $state and $stateParams services
-    function ($scope, data, timesheet) {
-      // TODO : set saveText on scope to the saveText assigned to the data of the current state
+    function (data, timesheet) {
+      var vm = this;
+      // TODO : set saveText on controller to the saveText assigned to the data of the current state
 
-      $scope.timesheet = timesheet;
+      vm.timesheet = timesheet;
 
-      // TODO : implement a function on scope to update the timesheet
-      // TODO : implement a function on scope to return back to the detail state on cancel and reload
+      // TODO : implement a function on controller to update the timesheet
+      // TODO : implement a function on controller to return back to the detail state on cancel and reload
     }
   )
 
   .controller('TimesheetCreateCtrl', 
     // TODO : inject $state and $stateParams services
-    function ($scope, data) {
-      // TODO : set saveText on scope to the saveText assigned to the data of the current state
-      $scope.timesheet = {};
+    function (data) {
+      var vm = this;
+      // TODO : set saveText on controller to the saveText assigned to the data of the current state
+      vm.timesheet = {};
 
-      // TODO : implement a function on scope to update the timesheet and redirect to the detail state
-      // TODO : implement a function on scope to navigate to the timesheet list page on cancel and reload the scope
+      // TODO : implement a function on controller to update the timesheet and redirect to the detail state
+      // TODO : implement a function on controller to navigate to the timesheet list page on cancel and reload the scope
     }
   );
     

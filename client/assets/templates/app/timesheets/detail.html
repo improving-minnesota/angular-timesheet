@@ -88,7 +88,7 @@
             <tbody>
 
               <!-- TODO : set the row to call showTimeunitDetail(timeunit) when clicked -->
-              <tr ng-repeat="timeunit in timeunits"
+              <tr ng-repeat="timeunit in timesheetDetailCtrl.timeunits"
                 class="fadeable-row"
                 ng-class="{faded: timeunit.deleted}">
 
@@ -98,10 +98,10 @@
                 <td>
                   <div ng-switch="timeunit.deleted">
                     <div ng-switch-when="true">
-                      <button class="btn btn-sm btn-default" ng-click="restoreTimeunit(timeunit); $event.stopPropagation();">Restore</button>
+                      <button class="btn btn-sm btn-default" ng-click="timesheetDetailCtrl.restoreTimeunit(timeunit); $event.stopPropagation();">Restore</button>
                     </div>
                     <div ng-switch-default>
-                      <button class="btn btn-sm btn-danger" ng-click="removeTimeunit(timeunit); $event.stopPropagation();">Delete</button>
+                      <button class="btn btn-sm btn-danger" ng-click="timesheetDetailCtrl.removeTimeunit(timeunit); $event.stopPropagation();">Delete</button>
                     </div>
                   </div>
                 </td>
