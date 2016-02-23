@@ -1,7 +1,7 @@
 describe('Security', function() {
 
   var expect = chai.expect;
-  var controller, scope;
+  var controller;
  
   describe('Controllers', function() {
       
@@ -18,11 +18,8 @@ describe('Security', function() {
 
     describe('LoginCtrl', function() {
       it('should be able to instantiate the controller',
-        inject(function($rootScope, $controller) {
-          var scope = $rootScope.$new(),
-            controller = $controller("LoginCtrl", {
-              $scope: scope
-            });
+        inject(function($controller) {
+            controller = $controller("LoginCtrl");
           
           expect(controller).to.be.ok;
       }));
