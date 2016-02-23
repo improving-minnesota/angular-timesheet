@@ -14,7 +14,7 @@ function EmployeesIndexPage() {
     this.newEmployeeButton.click();
   };
 
-  this.firstEmployee = element(by.repeater('employee in pageConfig.data').row(0));
+  this.firstEmployee = element(by.repeater('employee in employeeCtrl.pageConfig.data').row(0));
   this.clickFirstEmployee = function () {
     this.firstEmployee.click();
   };
