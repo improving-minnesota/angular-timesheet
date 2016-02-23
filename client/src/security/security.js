@@ -14,7 +14,8 @@ angular.module('app.security', [
       views : {
         'login' : {
           templateUrl: 'assets/templates/security/login.html',
-          controller: 'LoginCtrl'
+          controller: 'LoginCtrl',
+          controllerAs: 'loginCtrl'
         }
       }
     });
