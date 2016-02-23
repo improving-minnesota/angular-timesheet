@@ -2,7 +2,7 @@
   <div ng-show="$state.is('app.projects')">
     <div class="row tsz-form-row">
       <div class="col-sm-2 pull-right">
-        <button class="btn btn-primary btn-block" type="button" ng-click="createNew()">
+        <button class="btn btn-primary btn-block" type="button" ng-click="projectCtrl.createNew()">
           <i class="icon-plus"></i>
           New Project
         </button>
@@ -19,20 +19,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="project in pageConfig.data" 
+            <tr ng-repeat="project in projectCtrl.pageConfig.data" 
               class="fadeable-row"
               ng-class="{faded: project.deleted}"
-              ng-click="showDetail(project)">
+              ng-click="projectCtrl.showDetail(project)">
 
               <td>{{project.name}}</td>
               <td>{{project.description}}</td>
               <td>
                 <div ng-switch="project.deleted">
                   <div ng-switch-when="true">
-                    <button class="btn btn-sm btn-default" ng-click="restore(project); $event.stopPropagation();">Restore</button>
+                    <button class="btn btn-sm btn-default" ng-click="projectCtrl.restore(project); $event.stopPropagation();">Restore</button>
                   </div>
                   <div ng-switch-default>
-                    <button class="btn btn-sm btn-danger" ng-click="remove(project); $event.stopPropagation();">Delete</button>
+                    <button class="btn btn-sm btn-danger" ng-click="projectCtrl.remove(project); $event.stopPropagation();">Delete</button>
                   </div>
                 </div>
               </td>
@@ -44,12 +44,12 @@
 
     <div class="text-center">
       <div pagination
-        total-items="pageConfig.totalItems" 
-        page="pageConfig.page" 
-        items-per-page="pageConfig.limit" 
+        total-items="projectCtrl.pageConfig.totalItems" 
+        page="projectCtrl.pageConfig.page" 
+        items-per-page="projectCtrl.pageConfig.limit" 
         boundary-links="true" 
         rotate="true" 
-        on-select-page="requestProjects(page)">
+        on-select-page="projectCtrl.requestProjects(page)">
       </div>
     </div>
 
