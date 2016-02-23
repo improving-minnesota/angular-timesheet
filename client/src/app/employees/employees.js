@@ -9,6 +9,7 @@ angular.module('app.employees', [
     .state('app.employees', {
       url: '/employees',
       controller: 'EmployeeCtrl',
+      controllerAs: 'employeeCtrl',
       templateUrl: 'assets/templates/app/employees/index.html',
       data: {
         section: 'Employees'
@@ -18,6 +19,7 @@ angular.module('app.employees', [
     .state('app.employees.detail', {
       url: '/detail/:_id',
       controller: 'EmployeeDetailCtrl',
+      controllerAs: 'employeeFormCtrl',
       templateUrl: 'assets/templates/app/employees/form.html',
       data: {
         section: 'Update Employee',
@@ -36,6 +38,7 @@ angular.module('app.employees', [
     .state('app.employees.create', {
       url: '/create',
       controller: 'EmployeeCreateCtrl',
+      controllerAs: 'employeeFormCtrl',
       templateUrl: 'assets/templates/app/employees/form.html',
       data: {
         section: 'Create Employee',

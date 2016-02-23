@@ -8,15 +8,16 @@ angular.module('app.controllers', [])
   })
   
   .controller('AppCtrl', 
-    function ($scope){
+    function (){
       
     }
   )
 
   .controller('NavCtrl', 
-    function ($scope, authentication) {
+    function (authentication) {
+      var vm = this;
     
-      $scope.logout = function logout () {
+      vm.logout = function logout () {
         authentication.logout();
       };
     }
