@@ -2,7 +2,7 @@
   <div ng-show="$state.is('app.employees')">
     <div class="row tsz-form-row">
       <div class="col-sm-2 pull-right">
-        <button class="btn btn-primary btn-block" type="button" ng-click="createNew()">
+        <button class="btn btn-primary btn-block" type="button" ng-click="employeeCtrl.createNew()">
           <i class="icon-plus"></i>
           New Employee
         </button>
@@ -22,10 +22,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="employee in pageConfig.data" 
+            <tr ng-repeat="employee in employeeCtrl.pageConfig.data" 
               class="fadeable-row"
               ng-class="{faded: employee.deleted}"
-              ng-click="showDetail(employee)">
+              ng-click="employeeCtrl.showDetail(employee)">
 
               <td>{{employee.username}}</td>
               <td>{{employee.email}}</td>
@@ -35,10 +35,10 @@
               <td>
                 <div ng-switch="employee.deleted">
                   <div ng-switch-when="true">
-                    <button class="btn btn-sm btn-default" ng-click="restore(employee); $event.stopPropagation();">Restore</button>
+                    <button class="btn btn-sm btn-default" ng-click="employeeCtrl.restore(employee); $event.stopPropagation();">Restore</button>
                   </div>
                   <div ng-switch-default>
-                    <button class="btn btn-sm btn-danger" ng-click="remove(employee); $event.stopPropagation();">Delete</button>
+                    <button class="btn btn-sm btn-danger" ng-click="employeeCtrl.remove(employee); $event.stopPropagation();">Delete</button>
                   </div>
                 </div>
               </td>
@@ -50,12 +50,12 @@
 
     <div class="text-center">
       <div pagination
-        total-items="pageConfig.totalItems" 
-        page="pageConfig.page" 
-        items-per-page="pageConfig.limit" 
+        total-items="employeeCtrl.pageConfig.totalItems" 
+        page="employeeCtrl.pageConfig.page" 
+        items-per-page="employeeCtrl.pageConfig.limit" 
         boundary-links="true" 
         rotate="true" 
-        on-select-page="requestEmployees(page)">
+        on-select-page="employeeCtrl.requestEmployees(page)">
       </div>
     </div>
 
