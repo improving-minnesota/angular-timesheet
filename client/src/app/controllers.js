@@ -1,27 +1,29 @@
 angular.module('app.controllers', [])
 
   .controller('MainCtrl', function ($scope, securityContext){
-    
+    var vm = this;
+
     $scope.$watch(function () {
       return securityContext.authenticated;
     },
     function (authenticated) {
-      $scope.authenticated = authenticated;
-      $scope.loggedInUser = securityContext.user;
+      vm.authenticated = authenticated;
+      vm.loggedInUser = securityContext.user;
     });
 
   })
   
   .controller('AppCtrl', 
-    function ($scope){
+    function (){
       
     }
   )
 
   .controller('NavCtrl', 
-    function ($scope, authentication) {
+    function (authentication) {
+      var vm = this;
     
-      $scope.logout = function logout () {
+      vm.logout = function logout () {
         authentication.logout();
       };
     }
