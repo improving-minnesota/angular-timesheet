@@ -12,7 +12,7 @@ html(class="no-js", ng-app="main")
     - else
       link(href="/assets/css/style.css", rel="stylesheet", type="text/css")
 
-    body(ng-controller="MainCtrl")
+    body(ng-controller="MainCtrl as mainCtrl")
       .tsz-page-container(ng-cloak)
         .navbar.navbar-default.navbar-static-top
           .container-fluid
