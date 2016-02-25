@@ -9,6 +9,7 @@ angular.module('app.projects', [
     .state('app.projects', {
       url: '/projects',
       controller: 'ProjectCtrl',
+      controllerAs: 'projectCtrl',
       templateUrl: 'assets/templates/app/projects/index.html',
       data: {
         section: 'Projects'
@@ -18,6 +19,7 @@ angular.module('app.projects', [
     .state('app.projects.detail', {
       url: '/detail/:_id',
       controller: 'ProjectDetailCtrl',
+      controllerAs: 'projectFormCtrl',
       templateUrl: 'assets/templates/app/projects/form.html',
       data: {
         section: 'Project Details',
@@ -36,6 +38,7 @@ angular.module('app.projects', [
     .state('app.projects.create', {
       url: '/create',
       controller: 'ProjectCreateCtrl',
+      controllerAs: 'projectFormCtrl',
       templateUrl: 'assets/templates/app/projects/form.html',
       data: {
         section: 'Create Project',
