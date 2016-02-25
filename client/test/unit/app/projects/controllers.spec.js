@@ -1,12 +1,10 @@
 describe('Projects', function() {
 
   var expect = chai.expect;
-  var $rootScope,
-    $controller,
+  var $controller,
     $httpBackend,
     $state,
     $stateParams,
-    $scope,
     controller, 
     project,
     spies,
@@ -25,8 +23,7 @@ describe('Projects', function() {
         'app.projects.controllers'
       ));
 
-    beforeEach(inject(function (_$rootScope_, _$httpBackend_, _$controller_, _$state_, _$stateParams_){
-      $rootScope = _$rootScope_;
+    beforeEach(inject(function (_$httpBackend_, _$controller_, _$state_, _$stateParams_){
       $httpBackend = _$httpBackend_;
       $controller = _$controller_;
       $state = _$state_;
@@ -59,9 +56,7 @@ describe('Projects', function() {
     describe('ProjectCtrl', function() {
 
       beforeEach(function() {
-        $scope = $rootScope.$new();
         controller = $controller("ProjectCtrl", { 
-          $scope: $scope,
           $state: spies.state,
           $stateParams: $stateParams 
         });
@@ -73,7 +68,7 @@ describe('Projects', function() {
       describe('during setup', function () {
         it('should be able to instantiate the controller and request a page of projects', function () { 
           expect(controller).to.be.ok; 
-          // $scope.requestProjects is called upon controller creation
+          // controller.requestProjects is called upon controller creation
           $httpBackend.expect('GET', '/projects?page=1&sort=%7B%22name%22:1%7D');
           $httpBackend.flush();
         });
@@ -82,9 +77,9 @@ describe('Projects', function() {
       describe('requesting projects', function () {
         it('should set the result to the pageConfig object', function () {
           $httpBackend.expect('GET', '/projects?page=2&sort=%7B%22name%22:1%7D');
-          $scope.requestProjects(2);
+          controller.requestProjects(2);
           $httpBackend.flush();
-          expect($scope.pageConfig.name).to.equal("pageConfig2");
+          expect(controller.pageConfig.name).to.equal("pageConfig2");
         }); 
       });
 
@@ -92,12 +87,12 @@ describe('Projects', function() {
         it('should notify the user if the project is deleted', function () {
           project.deleted = true;
           $httpBackend.flush();
-          $scope.showDetail(project);
+          controller.showDetail(project);
           expect(spies.error).to.have.been.calledWith('You cannot edit a deleted project.');
         });
         it('should transition to the project detail state', function () {
           $httpBackend.flush();
-          $scope.showDetail(project);
+          controller.showDetail(project);
           expect(spies.state.go).to.have.been.calledWith('app.projects.detail', project);
         });
       });
@@ -105,7 +100,7 @@ describe('Projects', function() {
       describe('creating a new project', function () {
         it('should transition to the create project state', function () {
           $httpBackend.flush();
-          $scope.createNew();
+          controller.createNew();
           expect(spies.state.go).to.have.been.calledWith('app.projects.create');
         });
       });
@@ -115,7 +110,7 @@ describe('Projects', function() {
         it('should send a remove request for the specified project', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/projects/' + project._id).respond(200);
-          $scope.remove(project);
+          controller.remove(project);
           $httpBackend.flush();
         });
 
@@ -126,12 +121,12 @@ describe('Projects', function() {
           });
 
           it('should set the project to deleted for the ui', function () {
-            $scope.remove(project);
+            controller.remove(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.true;
           });
           it('should notify the user of the deletion', function () {
-            $scope.remove(project);
+            controller.remove(project);
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -145,12 +140,12 @@ describe('Projects', function() {
           });
 
           it('should set deleted to false for the project in the ui', function () {
-            $scope.remove(project);
+            controller.remove(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.false;
           });
           it('should notify the user of the error', function () {
-            $scope.remove(project);
+            controller.remove(project);
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -167,7 +162,7 @@ describe('Projects', function() {
         it('should send a restore request for the specified project', function () {
           $httpBackend.flush();
           $httpBackend.expect('PUT', '/projects/' + project._id).respond(200);
-          $scope.restore(project);
+          controller.restore(project);
           $httpBackend.flush();
         });
 
@@ -178,12 +173,12 @@ describe('Projects', function() {
           });
 
           it('should set the project to not deleted for the ui', function () {
-            $scope.restore(project);
+            controller.restore(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.false;
           });
           it('should notify the user of the deletion', function () {
-            $scope.restore(project);
+            controller.restore(project);
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -197,12 +192,12 @@ describe('Projects', function() {
           });
 
           it('should set deleted to true for the project in the ui', function () {
-            $scope.restore(project);
+            controller.restore(project);
             $httpBackend.flush();
             expect(project.deleted).to.be.true;
           });
           it('should notify the user of the error', function () {
-            $scope.restore(project);
+            controller.restore(project);
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -213,7 +208,7 @@ describe('Projects', function() {
       describe('cancel', function () {
         it('should return back to the project list', function () {
           $httpBackend.flush();
-          $scope.cancel();
+          controller.cancel();
           expect(spies.state.go).to.have.been.calledWith('app.projects');
         });
       });
@@ -225,9 +220,7 @@ describe('Projects', function() {
       beforeEach(function() {
         $state.current = {data: {saveText: 'update'}};
 
-        $scope = $rootScope.$new();
         controller = $controller("ProjectDetailCtrl", {
-          $scope: $scope,
           project: new api.projects(project),
           $state: spies.state,
           $stateParams: $stateParams
@@ -240,12 +233,12 @@ describe('Projects', function() {
         });
 
         it('should set saveText to the current state saveText', function () {
-          expect($scope.saveText).to.equal('update');
+          expect(controller.saveText).to.equal('update');
         });
 
         it('should set the project on scope to the resolved project', function () {
-          expect($scope.project._id).to.equal(project._id);
-          expect($scope.project.name).to.equal(project.name);
+          expect(controller.project._id).to.equal(project._id);
+          expect(controller.project.name).to.equal(project.name);
         });
       });
 
@@ -264,13 +257,13 @@ describe('Projects', function() {
           });
 
           it('should set the project on scope to be the updated project', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
-            expect($scope.project.name).to.equal(updatedProject.name);
+            expect(controller.project.name).to.equal(updatedProject.name);
           });
 
           it('should notify the user of the successful update', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -280,7 +273,7 @@ describe('Projects', function() {
         describe('in error', function () {
           it('should notify the user of the error', function () {
             $httpBackend.when('PUT', '/projects/' + project._id).respond(500);
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;
@@ -295,9 +288,7 @@ describe('Projects', function() {
       beforeEach(function() {
         $state.current = {data: {saveText: 'create'}};
 
-        $scope = $rootScope.$new();
         controller = $controller("ProjectCreateCtrl", {
-          $scope: $scope,
           $state: spies.state,
           $stateParams: $stateParams
         });
@@ -309,11 +300,11 @@ describe('Projects', function() {
         });
 
         it('should set saveText to the current state saveText', function () {
-          expect($scope.saveText).to.equal('create');
+          expect(controller.saveText).to.equal('create');
         });
         
         it('should set the project on scope to an empy object', function () {
-          expect($scope.project).to.be.empty;
+          expect(controller.project).to.be.empty;
         });
       }); 
 
@@ -329,14 +320,14 @@ describe('Projects', function() {
             $httpBackend.when('POST', '/projects').respond(200, project);
           });
 
-          it('should transition to the detail page of the created project', function () {
-            $scope.save();
+          it('should transition to the project page', function () {
+            controller.save();
             $httpBackend.flush();
-            expect(spies.state.go).to.have.been.calledWith('app.projects.detail', {_id: project._id});
+            expect(spies.state.go).to.have.been.calledWith('app.projects');
           });
 
           it('should notify the user of the successful create', function () {
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.success).to.have.been.called;
             expect(spies.error).to.not.have.been.called;
@@ -346,7 +337,7 @@ describe('Projects', function() {
         describe('in error', function () {
           it('should notify the user of the error', function () {
             $httpBackend.when('POST', '/projects').respond(500);
-            $scope.save();
+            controller.save();
             $httpBackend.flush();
             expect(spies.error).to.have.been.called;
             expect(spies.success).to.not.have.been.called;

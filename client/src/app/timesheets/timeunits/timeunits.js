@@ -11,6 +11,7 @@ angular.module('app.timesheets.timeunits', [
         abstract: true,
         url: '/timeunits',
         controller: 'TimeunitCtrl',
+        controllerAs: 'timeunitCtrl',
         template: '<div ui-view></div>',
         resolve: {
           projects: [
@@ -24,6 +25,7 @@ angular.module('app.timesheets.timeunits', [
       .state('app.timesheets.detail.timeunits.create', {
         url: '/create',
         controller: 'TimeunitCreateCtrl',
+        controllerAs: 'timeunitFormCtrl',
         templateUrl: 'assets/templates/app/timesheets/timeunits/form.html',
         data: {
           section: 'Log Time'
@@ -33,6 +35,7 @@ angular.module('app.timesheets.timeunits', [
       .state('app.timesheets.detail.timeunits.edit', {
         url: '/edit/:timeunit_id',
         controller: 'TimeunitEditCtrl',
+        controllerAs: 'timeunitFormCtrl',
         templateUrl: 'assets/templates/app/timesheets/timeunits/form.html',
         data: {
           section: 'Edit Time'
