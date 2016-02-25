@@ -7,7 +7,7 @@
           <div tsz-field-wrap input-id="employee-username" label="Username">
             <input type="text" class="form-control" 
               name="employee-username" placeholder="Employee Username"
-              ng-model="employee.username" 
+              ng-model="employeeFormCtrl.employee.username"
               ng-minlength="1" ng-maxlength="40" required>
           </div>
         </div>
@@ -15,8 +15,8 @@
         <div class="form-group">
           <div tsz-field-wrap input-id="employee-email" label="Email">
             <input type="text" class="form-control" 
-              name="employee-email" placeholder="Employee Email"
-              ng-model="employee.email" 
+              name="employee-email" placeholder="Employee Email" 
+              ng-model="employeeFormCtrl.employee.email"
               ng-minlength="1" ng-maxlength="255" required>
           </div>
         </div>
@@ -25,7 +25,7 @@
           <div tsz-field-wrap input-id="employee-firstName" label="First Name">
             <input type="text" class="form-control" 
               name="employee-firstName" placeholder="First Name"
-              ng-model="employee.firstName" 
+              ng-model="employeeFormCtrl.employee.firstName"
               ng-minlength="1" ng-maxlength="255" required>
           </div>
         </div>
@@ -34,7 +34,7 @@
           <div tsz-field-wrap input-id="employee-lastName" label="Last Name">
             <input type="text" class="form-control" 
               name="employee-lastName" placeholder="Last Name"
-              ng-model="employee.lastName" 
+              ng-model="employeeFormCtrl.employee.lastName"
               ng-minlength="1" ng-maxlength="255" required>
           </div>
         </div>
@@ -42,10 +42,10 @@
         <div class="form-group">
           <div tsz-field-wrap input-id="employee-admin" label="Admin">
              <button type="button" class="btn btn-primary" 
-                ng-model="employee.admin" 
+                ng-model="employeeFormCtrl.employee.admin" 
                 btn-checkbox 
                 btn-checkbox-true="true" 
-                btn-checkbox-false="false">{{employee.admin}}</button>
+                btn-checkbox-false="false">{{employeeFormCtrl.employee.admin}}</button>
                 <!-- TODO : add the boolean filter -->
           </div>
         </div>
@@ -57,11 +57,11 @@
         <div class="row">
           <div class="col-sm-2 col-sm-offset-8">
             <button class="btn btn-primary btn-block" 
-              ng-click="save()"
-              ng-disabled="employeeForm.$invalid">{{saveText}}</button>
+              ng-click="employeeFormCtrl.save()"
+              ng-disabled="employeeForm.$invalid">{{employeeFormCtrl.saveText}}</button>
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-danger btn-block" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-danger btn-block" ng-click="employeeCtrl.cancel()">Cancel</button>
           </div>
         </div>
       </form>
