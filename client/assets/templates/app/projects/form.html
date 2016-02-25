@@ -7,7 +7,7 @@
           <div tsz-field-wrap input-id="project-name" label="Name">
             <input type="text" class="form-control" 
               name="project-name" placeholder="Project Name"
-              ng-model="project.name" 
+              ng-model="projectFormCtrl.project.name"
               ng-minlength="1" ng-maxlength="40" required>
           </div>
         </div>
@@ -16,7 +16,7 @@
           <div tsz-field-wrap input-id="project-description" label="Description">
             <input type="text" class="form-control" 
               name="project-description" placeholder="Project Description"
-              ng-model="project.description" 
+              ng-model="projectFormCtrl.project.description"
               ng-minlength="1" ng-maxlength="255" required>
           </div>
         </div>
@@ -28,11 +28,11 @@
         <div class="row">
           <div class="col-sm-2 col-sm-offset-8">
             <button class="btn btn-primary btn-block" 
-              ng-click="save()"
-              ng-disabled="projectForm.$invalid">{{saveText}}</button>
+              ng-click="projectFormCtrl.save()"
+              ng-disabled="projectForm.$invalid">{{projectFormCtrl.saveText}}</button>
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-danger btn-block" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-danger btn-block" ng-click="projectCtrl.cancel()">Cancel</button>
           </div>
         </div>
       </form>
