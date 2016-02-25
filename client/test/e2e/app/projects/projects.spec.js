@@ -56,7 +56,7 @@ describe('Projects', function () {
 
       it('should be able to update the project', function () {
         formPage
-          .enterValue('project.name', 'newProjectName')
+          .enterValue('projectFormCtrl.project.name', 'newProjectName')
           .saveForm('Update');
 
         browser.sleep(3000);

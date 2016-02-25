@@ -58,7 +58,7 @@ describe('Employees', function () {
       it('should be able to update the employee', function () {
 
         formPage
-          .enterValue('employee.firstName', 'newName')
+          .enterValue('employeeFormCtrl.employee.firstName', 'newName')
           .saveForm('Update');
 
         browser.sleep(2);
