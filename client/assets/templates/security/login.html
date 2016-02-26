@@ -16,7 +16,7 @@
 
           <div class="row">
             <div class="col-xs-12">
-              <div class="alert alert-warning" ng-show="authReason">
+              <div class="alert alert-warning" ng-show="loginCtrl.authReason">
                  <!-- Add the authentication reason here  -->
                 {{loginCtrl.authReason}}
               </div>
@@ -25,7 +25,7 @@
 
           <div class="row">
             <div class="col-xs-12">
-              <div class="alert alert-danger" ng-show="authError">
+              <div class="alert alert-danger" ng-show="loginCtrl.authError">
                 {{loginCtrl.authError}}
               </div>
             </div>
