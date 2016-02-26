@@ -18,7 +18,7 @@ describe('App', function() {
 
     describe('MainCtrl', function() {
       beforeEach(inject(function($rootScope, $controller) {
-        $scope = $rootScope.$new();
+        scope = $rootScope.$new();
         controller = $controller("MainCtrl", {
           $scope: scope
         });
