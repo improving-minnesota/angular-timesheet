@@ -3,6 +3,7 @@ angular.module('main', [
   'templates-lib',
   'app',
   'form.directives',
+  'form.components',
   'date.filters',
   'progress.interceptors',
   'security.interceptors',

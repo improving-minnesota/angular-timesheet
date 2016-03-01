@@ -10,7 +10,6 @@ describe('Form directives', function () {
   beforeEach(module(
     'form.directives',
     'ngResource',
-    'assets/templates/directives/form/form-header.html',
     'assets/templates/directives/form/field-wrapper.html',
     'assets/templates/directives/form/static-field.html'
   ));
@@ -20,52 +19,6 @@ describe('Form directives', function () {
     $httpBackend = _$httpBackend_;
     $scope = $rootScope.$new();
   }));
-
-  describe('tszFormSectionHeader', function () {
-
-    beforeEach(function () {
-      $scope.headerName = 'My Header';
-      $scope.content = 'My Content';
-
-      element = angular.element(
-        '<div tsz-form-section-header header="{{headerName}}">' +
-        '   <p>{{content}}</p>' +
-        '</div>');
-
-      $compile(element)($scope);
-
-      $scope.$digest();
-      $scope.$apply();
-    });
-
-    describe('header attribute', function() {
-      it('should set the header content within the directive template', function () {
-        expect(element.find('h4').text()).to.equal('My Header');
-      });
-      it('should respond to changes', function () {
-        expect(element.find('h4').text()).to.equal('My Header');
-        $scope.$apply(function() {
-          $scope.headerName = 'My Updated Header';
-        });
-        expect(element.find('h4').text()).to.equal('My Updated Header');
-      });
-    });
-    
-    describe('transcluded contents', function() {
-      it('should transclude the directive element contents', function () {
-        expect(element.find('p').text()).to.equal('My Content');
-      });
-      it('should respond to changes', function () {
-        expect(element.find('p').text()).to.equal('My Content');
-        $scope.$apply(function() {
-          $scope.content = 'My Updated Content';
-        });
-        expect(element.find('p').text()).to.equal('My Updated Content');
-      });
-    });
-
-    
-  });
 
   describe('tszFieldWrap', function () {
 

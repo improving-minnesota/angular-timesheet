@@ -1,16 +1,5 @@
 angular.module('form.directives', [])
 
-  .directive('tszFormSectionHeader', function () {
-    return {
-      replace: true,
-      transclude: true,
-      scope: {
-        header: '@'
-      },
-      templateUrl: 'assets/templates/directives/form/form-header.html'
-    };
-  })
-
   .directive('tszFieldWrap', function ($compile) {
     return {
       transclude: true,
